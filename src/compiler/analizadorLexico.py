@@ -10,7 +10,8 @@ errL = False
 isComment = 0
 
 # Tokens para catalogar los lexemas
-tokens = ['ID', 'RPC', 'LPC', 'NUMBER', 'REG', 'COMMA', 'MINUS', 'NUM', 'DP']
+tokens = ['ID', 'RPC', 'LPC', 'NUMBER', 'REG',
+          'VEC', 'COMMA', 'MINUS', 'NUM', 'DP']
 
 
 kword = ['ADD', 'SUB', 'MOV', 'NOP', 'STR', 'LDR', 'CMP', 'ADDV',
@@ -126,12 +127,18 @@ def t_LDR(t):
 
 
 def t_ID(t):
-    r'[a-qs-zA-QS-Z][a-zA-Z0-9]*'
+    r'[a-qs-uw-zA-QS-UW-Z][a-zA-Z0-9]*'
     return t
 
 
 def t_REG(t):
     r'[rR][0-9]+'
+    t.value = t.value.upper()
+    return t
+
+
+def t_VEC(t):
+    r'[vV][0-9]+'
     t.value = t.value.upper()
     return t
 
