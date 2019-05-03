@@ -46,26 +46,15 @@ def p_instNop(p):  # LISTO##LISTO#
 ##################### Basic Instructions #####################
 
 
-def p_instMOVImm(p):
-    '''inst : MOV REG COMMA NUM NUMBER'''
-    p[4] = int(p[5])
-    p[0] = {1: "MOV", 2: p[2], 3: p[5], 4: "END"}
-
-
-def p_instMOVReg(p):
-    '''inst : MOV REG COMMA REG COMMA REG'''
-    p[0] = {1: "MOV", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
-
-
 def p_instAdd(p):  # LISTO##LISTO#
     '''inst : ADD REG COMMA REG COMMA REG'''
     p[0] = {1: "ADD", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
 
 
-def p_instAddImm1(p):  # LISTO##LISTO#
+def p_instAddImm(p):  # LISTO##LISTO#
     '''inst : ADD REG COMMA REG COMMA NUM NUMBER'''
     p[6] = int(p[7])
-    p[0] = {1: "ADDI", 2: p[2], 3: p[4], 4: p[7], 5: "END"}
+    p[0] = {1: "ADDI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
 def p_instSub(p):  # LISTO##LISTO#
@@ -76,7 +65,18 @@ def p_instSub(p):  # LISTO##LISTO#
 def p_instSubImm(p):  # LISTO##LISTO#
     '''inst : SUB REG COMMA REG COMMA NUM NUMBER'''
     p[6] = int(p[7])
-    p[0] = {1: "SUBI", 2: p[2], 3: p[4], 4: p[7], 5: "END"}
+    p[0] = {1: "SUBI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
+
+
+def p_instXOR(p):  # LISTO##LISTO#
+    '''inst : XOR REG COMMA REG COMMA REG'''
+    p[0] = {1: "XOR", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
+
+
+def p_instXORImm(p):  # LISTO##LISTO#
+    '''inst : XOR REG COMMA REG COMMA NUM NUMBER'''
+    p[6] = int(p[7])
+    p[0] = {1: "XORI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
 def p_instLdrR(p):  # LISTO##LISTO#
@@ -97,7 +97,7 @@ def p_instLdrImm(p):  # LISTO##LISTO#
 
 def p_instLdrRI(p):  # LISTO##LISTO#
     '''inst : LDR REG COMMA LPC REG COMMA NUM NUMBER RPC'''
-    p[0] = {1: "LDRRI", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
+    p[0] = {1: "LDRRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 
 def p_instLdr(p):  # LISTO##LISTO#
@@ -112,7 +112,7 @@ def p_instStrR(p):  # LISTO##LISTO#
 
 def p_instStrRI(p):  # LISTO##LISTO#
     '''inst : STR REG COMMA LPC REG COMMA NUM NUMBER RPC'''
-    p[0] = {1: "STRRI", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
+    p[0] = {1: "STRRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 
 def p_instStrMR(p):  # LISTO##LISTO#
@@ -123,7 +123,7 @@ def p_instStrMR(p):  # LISTO##LISTO#
 def p_instStrImm(p):  # LISTO##LISTO#
     '''inst : STR REG COMMA LPC REG RPC COMMA NUM NUMBER'''
     p[9] = int(p[9])
-    p[0] = {1: "STRI", 2: p[2], 3: p[5], 4: (p[9]), 5: "END"}
+    p[0] = {1: "STRI", 2: p[2], 3: p[5], 4: int(p[9]), 5: "END"}
 
 
 def p_instStr(p):  # LISTO##LISTO#
@@ -153,6 +153,55 @@ def p_instSubVecImm(p):
     '''inst : ADDV VEC COMMA NUM NUMBER'''
     p[0] = {1: "SUBVI", 2: p[2], 3: int(p[5]), 4: "END"}
 
+
+def p_instCirRVReg(p):
+    '''inst : CIRRV VEC COMMA VEC COMMA REG'''
+    p[0] = {1: "CIRRV", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
+
+
+def p_instCirRVImm(p):
+    '''inst : CIRRV VEC COMMA VEC COMMA NUM NUMBER'''
+    p[0] = {1: "CIRRVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
+
+
+def p_instCirLVReg(p):
+    '''inst : CIRRV VEC COMMA VEC COMMA REG'''
+    p[0] = {1: "CIRLV", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
+
+
+def p_instCirLVImm(p):
+    '''inst : CIRRV VEC COMMA VEC COMMA NUM NUMBER'''
+    p[0] = {1: "CIRLVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
+
+
+def p_instXorVReg(p):
+    '''inst : XORV VEC COMMA VEC COMMA REG'''
+    p[0] = {1: "XORV", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
+
+
+def p_instXorVImm(p):
+    '''inst : XORV VEC COMMA VEC COMMA REG'''
+    p[0] = {1: "XORVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
+
+
+def p_instALGV(p):
+    '''inst : ALGV NUM NUMBER'''
+    p[0] = {1: "ALGV", 2: int(p[3]), 3: "END"}
+
+
+def p_instRepeat(p):
+    '''inst : REPEAT NUM NUMBER'''
+    p[0] = {1: "REPEAT", 2: int(p[3]), 3: "END"}
+
+
+def p_instLdrVRI(p):
+    '''inst : LDRV REG COMMA LPC REG COMMA NUM NUMBER RPC'''
+    p[0] = {1: "LDRVRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
+
+
+def p_instStrVRI(p):
+    '''inst : STRV REG COMMA LPC REG COMMA NUM NUMBER RPC'''
+    p[0] = {1: "STRVI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 ##################### Other Instructions #####################
 

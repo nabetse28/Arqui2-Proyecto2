@@ -1,4 +1,5 @@
 from PIL import Image
+from clock import *
 
 
 def main():

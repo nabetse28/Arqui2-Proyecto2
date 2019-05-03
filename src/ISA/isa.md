@@ -1,9 +1,9 @@
-# ISA (Instruction Set Architecture) 28 bits
+# ISA (Instruction Set Architecture) 32 bits
 
 ## ISA Structure
 
-**cond**(4) **op**(2) **IV**(2) **cmd**(4) **Rn**(4) **Rd**(4) **Src**(8)
-**total bits** = 28
+**cond**(4) **op**(2) **IV**(2) **cmd**(4) **Rn**(4) **Rd**(4) **Src**(12)
+**total bits** = 32
 
 1. cond
    This indicates the FLAGS the processor is going to use.

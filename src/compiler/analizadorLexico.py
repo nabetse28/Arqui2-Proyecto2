@@ -15,7 +15,7 @@ tokens = ['ID', 'RPC', 'LPC', 'NUMBER', 'REG',
 
 
 kword = ['ADD', 'SUB', 'MOV', 'NOP', 'STR', 'LDR', 'CMP', 'ADDV',
-         'SUBV', 'MOVV', 'XORV', 'CIRRV', 'CIRLV', 'ALGV', 'STRV', 'LDRV']
+         'SUBV', 'MOVV', 'XORV', 'CIRRV', 'CIRLV', 'ALGV', 'STRV', 'LDRV', 'REPEAT']
 
 
 tokens = tokens + kword
