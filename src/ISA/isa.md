@@ -1,4 +1,4 @@
-# ISA (Instruction Set Architecture) 32 bits
+# ISA (Instruction Set Architecture) 28 bits
 
 ## ISA Structure
 
