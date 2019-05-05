@@ -1,0 +1,13 @@
+
+ADD R1, R2, #0
+ADDV V1, V2, V3
+
+STRV V1, [R1 , #0]
+
+REPEAT #4
+
+
+ADD R1, R2, #6
+ADDV V1, V2, V5
+
+REPEAT #7

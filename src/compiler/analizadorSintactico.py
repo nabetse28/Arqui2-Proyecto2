@@ -43,6 +43,11 @@ def p_instNop(p):  # LISTO##LISTO#
     '''inst : NOP'''
     p[0] = {1: "NOP", 2: "END"}
 
+
+def p_FIN(p):
+    '''inst : FIN'''
+    p[0] = {1: "FIN", 2: "END"}
+
 ##################### Basic Instructions #####################
 
 
@@ -140,8 +145,8 @@ def p_instAddVec(p):
 
 
 def p_instAddVecImm(p):
-    '''inst : ADDV VEC COMMA NUM NUMBER'''
-    p[0] = {1: "ADDVI", 2: p[2], 3: int(p[5]), 4: "END"}
+    '''inst : ADDV VEC COMMA VEC COMMA NUM NUMBER'''
+    p[0] = {1: "ADDVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
 def p_instSubVec(p):
@@ -150,8 +155,8 @@ def p_instSubVec(p):
 
 
 def p_instSubVecImm(p):
-    '''inst : ADDV VEC COMMA NUM NUMBER'''
-    p[0] = {1: "SUBVI", 2: p[2], 3: int(p[5]), 4: "END"}
+    '''inst : SUBV VEC COMMA VEC COMMA NUM NUMBER'''
+    p[0] = {1: "SUBVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
 def p_instCirRVReg(p):
@@ -165,12 +170,12 @@ def p_instCirRVImm(p):
 
 
 def p_instCirLVReg(p):
-    '''inst : CIRRV VEC COMMA VEC COMMA REG'''
+    '''inst : CIRLV VEC COMMA VEC COMMA REG'''
     p[0] = {1: "CIRLV", 2: p[2], 3: p[4], 4: p[6], 5: "END"}
 
 
 def p_instCirLVImm(p):
-    '''inst : CIRRV VEC COMMA VEC COMMA NUM NUMBER'''
+    '''inst : CIRLV VEC COMMA VEC COMMA NUM NUMBER'''
     p[0] = {1: "CIRLVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
@@ -180,7 +185,7 @@ def p_instXorVReg(p):
 
 
 def p_instXorVImm(p):
-    '''inst : XORV VEC COMMA VEC COMMA REG'''
+    '''inst : XORV VEC COMMA VEC COMMA NUM NUMBER'''
     p[0] = {1: "XORVI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
@@ -195,13 +200,24 @@ def p_instRepeat(p):
 
 
 def p_instLdrVRI(p):
-    '''inst : LDRV REG COMMA LPC REG COMMA NUM NUMBER RPC'''
+    '''inst : LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC'''
     p[0] = {1: "LDRVRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 
+def p_instLdrVRIOwn(p):
+    '''inst : LDRV VEC COMMA LPC NUM NUMBER RPC'''
+    p[0] = {1: "LDRVIO", 2: p[2], 4: int(p[6]), 5: "END"}
+
+
 def p_instStrVRI(p):
-    '''inst : STRV REG COMMA LPC REG COMMA NUM NUMBER RPC'''
+    '''inst : STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC'''
     p[0] = {1: "STRVI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
+
+
+def p_instStrVRIOwn(p):
+    '''inst : STRV VEC COMMA LPC NUM NUMBER RPC'''
+    p[0] = {1: "STRVIO", 2: p[2], 4: int(p[6]), 5: "END"}
+
 
 ##################### Other Instructions #####################
 
@@ -234,6 +250,7 @@ def getErrS():
 
 
 def divInst(lista):
+    # print(lista)
     c = 0
     r = []
     for x in range(len(lista)):
@@ -243,15 +260,24 @@ def divInst(lista):
     return r
 
 
+def withOutNop(lista):
+    x = []
+    print(lista)
+    size = len(lista) - 1
+    for i in range(0, size):
+        if(lista[i] == 'NOP'):
+            print("HERE")
+
+
 SemanticList = []
 
 
 def initCompi(nameDoc):
     fp = codecs.open(nameDoc, "r", "utf-8")
     cadena = fp.read()
-    print(cadena)
     fp.close()
     analizador = lex.lex()
+
     analizador.input(cadena)
 
     parser = yacc.yacc()
@@ -259,4 +285,5 @@ def initCompi(nameDoc):
 
     global SemanticList
     recorrer(listap)
-    return divInst(SemanticList)
+    l = divInst(SemanticList)
+    return l

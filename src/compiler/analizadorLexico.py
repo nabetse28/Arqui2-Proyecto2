@@ -14,8 +14,8 @@ tokens = ['ID', 'RPC', 'LPC', 'NUMBER', 'REG',
           'VEC', 'COMMA', 'MINUS', 'NUM', 'DP']
 
 
-kword = ['ADD', 'SUB', 'MOV', 'NOP', 'STR', 'LDR', 'CMP', 'ADDV',
-         'SUBV', 'MOVV', 'XORV', 'CIRRV', 'CIRLV', 'ALGV', 'STRV', 'LDRV', 'REPEAT']
+kword = ['ADD', 'SUB', 'NOP', 'STR', 'LDR', 'ADDV', 'XOR', 'FIN',
+         'SUBV', 'XORV', 'CIRRV', 'CIRLV', 'ALGV', 'STRV', 'LDRV', 'REPEAT']
 
 
 tokens = tokens + kword
@@ -30,10 +30,10 @@ t_NUM = r'\#'
 t_DP = r'\:'
 
 
-def t_MOVV(t):
-    r'MOVV|movv'
-    t.value = t.value.upper()
-    return t
+# def t_MOVV(t):
+#     r'MOVV|movv'
+#     t.value = t.value.upper()
+#     return t
 
 
 def t_XORV(t):
@@ -72,10 +72,15 @@ def t_LDRV(t):
     return t
 
 
-def t_CMP(t):
-    r'CMP|cmp'
+def t_REPEAT(t):
+    r'REPEAT|repeat'
     t.value = t.value.upper()
     return t
+
+# def t_CMP(t):
+#     r'CMP|cmp'
+#     t.value = t.value.upper()
+#     return t
 
 
 def t_ADDV(t):
@@ -102,10 +107,10 @@ def t_SUB(t):
     return t
 
 
-def t_MOV(t):
-    r'MOV|mov'
-    t.value = t.value.upper()
-    return t
+# def t_MOV(t):
+#     r'MOV|mov'
+#     t.value = t.value.upper()
+#     return t
 
 
 def t_NOP(t):
@@ -139,6 +144,12 @@ def t_REG(t):
 
 def t_VEC(t):
     r'[vV][0-9]+'
+    t.value = t.value.upper()
+    return t
+
+
+def t_FIN(t):
+    r'[FIN|fin]'
     t.value = t.value.upper()
     return t
 
