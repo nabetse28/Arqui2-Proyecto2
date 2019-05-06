@@ -1,0 +1,1627 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    MINUS
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> block
+Rule 2     block -> inst block
+Rule 3     block -> empty
+Rule 4     inst -> ID DP
+Rule 5     inst -> NOP
+Rule 6     inst -> ADD REG COMMA REG COMMA REG
+Rule 7     inst -> ADD REG COMMA REG COMMA NUM NUMBER
+Rule 8     inst -> SUB REG COMMA REG COMMA REG
+Rule 9     inst -> SUB REG COMMA REG COMMA NUM NUMBER
+Rule 10    inst -> XOR REG COMMA REG COMMA REG
+Rule 11    inst -> XOR REG COMMA REG COMMA NUM NUMBER
+Rule 12    inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER
+Rule 13    inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC
+Rule 14    inst -> LDR REG COMMA LPC REG RPC
+Rule 15    inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER
+Rule 16    inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC
+Rule 17    inst -> STR REG COMMA LPC REG RPC
+Rule 18    inst -> ADDV VEC COMMA VEC COMMA VEC
+Rule 19    inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER
+Rule 20    inst -> SUBV VEC COMMA VEC COMMA VEC
+Rule 21    inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER
+Rule 22    inst -> CIRRV VEC COMMA VEC COMMA REG
+Rule 23    inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER
+Rule 24    inst -> CIRLV VEC COMMA VEC COMMA REG
+Rule 25    inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER
+Rule 26    inst -> XORV VEC COMMA VEC COMMA REG
+Rule 27    inst -> XORV VEC COMMA VEC COMMA NUM NUMBER
+Rule 28    inst -> ALGV NUM NUMBER
+Rule 29    inst -> REPEAT NUM NUMBER
+Rule 30    inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+Rule 31    inst -> LDRV VEC COMMA LPC REG RPC
+Rule 32    inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+Rule 33    inst -> STRV VEC COMMA LPC REG RPC
+Rule 34    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ADD                  : 6 7
+ADDV                 : 18 19
+ALGV                 : 28
+CIRLV                : 24 25
+CIRRV                : 22 23
+COMMA                : 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 15 15 16 16 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 30 30 31 32 32 33
+DP                   : 4
+ID                   : 4
+LDR                  : 12 13 14
+LDRV                 : 30 31
+LPC                  : 12 13 14 15 16 17 30 31 32 33
+MINUS                : 
+NOP                  : 5
+NUM                  : 7 9 11 12 13 15 16 19 21 23 25 27 28 29 30 32
+NUMBER               : 7 9 11 12 13 15 16 19 21 23 25 27 28 29 30 32
+REG                  : 6 6 6 7 7 8 8 8 9 9 10 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 17 22 24 26 30 31 32 33
+REPEAT               : 29
+RPC                  : 12 13 14 15 16 17 30 31 32 33
+STR                  : 15 16 17
+STRV                 : 32 33
+SUB                  : 8 9
+SUBV                 : 20 21
+VEC                  : 18 18 18 19 19 20 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 30 31 32 33
+XOR                  : 10 11
+XORV                 : 26 27
+error                : 
+
+Nonterminals, with rules where they appear
+
+block                : 1 2
+empty                : 3
+inst                 : 2
+program              : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . block
+    (2) block -> . inst block
+    (3) block -> . empty
+    (4) inst -> . ID DP
+    (5) inst -> . NOP
+    (6) inst -> . ADD REG COMMA REG COMMA REG
+    (7) inst -> . ADD REG COMMA REG COMMA NUM NUMBER
+    (8) inst -> . SUB REG COMMA REG COMMA REG
+    (9) inst -> . SUB REG COMMA REG COMMA NUM NUMBER
+    (10) inst -> . XOR REG COMMA REG COMMA REG
+    (11) inst -> . XOR REG COMMA REG COMMA NUM NUMBER
+    (12) inst -> . LDR REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (13) inst -> . LDR REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (14) inst -> . LDR REG COMMA LPC REG RPC
+    (15) inst -> . STR REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (16) inst -> . STR REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (17) inst -> . STR REG COMMA LPC REG RPC
+    (18) inst -> . ADDV VEC COMMA VEC COMMA VEC
+    (19) inst -> . ADDV VEC COMMA VEC COMMA NUM NUMBER
+    (20) inst -> . SUBV VEC COMMA VEC COMMA VEC
+    (21) inst -> . SUBV VEC COMMA VEC COMMA NUM NUMBER
+    (22) inst -> . CIRRV VEC COMMA VEC COMMA REG
+    (23) inst -> . CIRRV VEC COMMA VEC COMMA NUM NUMBER
+    (24) inst -> . CIRLV VEC COMMA VEC COMMA REG
+    (25) inst -> . CIRLV VEC COMMA VEC COMMA NUM NUMBER
+    (26) inst -> . XORV VEC COMMA VEC COMMA REG
+    (27) inst -> . XORV VEC COMMA VEC COMMA NUM NUMBER
+    (28) inst -> . ALGV NUM NUMBER
+    (29) inst -> . REPEAT NUM NUMBER
+    (30) inst -> . LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (31) inst -> . LDRV VEC COMMA LPC REG RPC
+    (32) inst -> . STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (33) inst -> . STRV VEC COMMA LPC REG RPC
+    (34) empty -> .
+
+    ID              shift and go to state 5
+    NOP             shift and go to state 6
+    ADD             shift and go to state 7
+    SUB             shift and go to state 8
+    XOR             shift and go to state 9
+    LDR             shift and go to state 10
+    STR             shift and go to state 11
+    ADDV            shift and go to state 12
+    SUBV            shift and go to state 13
+    CIRRV           shift and go to state 14
+    CIRLV           shift and go to state 15
+    XORV            shift and go to state 16
+    ALGV            shift and go to state 17
+    REPEAT          shift and go to state 18
+    LDRV            shift and go to state 19
+    STRV            shift and go to state 20
+    $end            reduce using rule 34 (empty -> .)
+
+    program                        shift and go to state 1
+    block                          shift and go to state 2
+    inst                           shift and go to state 3
+    empty                          shift and go to state 4
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> block .
+
+    $end            reduce using rule 1 (program -> block .)
+
+
+state 3
+
+    (2) block -> inst . block
+    (2) block -> . inst block
+    (3) block -> . empty
+    (4) inst -> . ID DP
+    (5) inst -> . NOP
+    (6) inst -> . ADD REG COMMA REG COMMA REG
+    (7) inst -> . ADD REG COMMA REG COMMA NUM NUMBER
+    (8) inst -> . SUB REG COMMA REG COMMA REG
+    (9) inst -> . SUB REG COMMA REG COMMA NUM NUMBER
+    (10) inst -> . XOR REG COMMA REG COMMA REG
+    (11) inst -> . XOR REG COMMA REG COMMA NUM NUMBER
+    (12) inst -> . LDR REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (13) inst -> . LDR REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (14) inst -> . LDR REG COMMA LPC REG RPC
+    (15) inst -> . STR REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (16) inst -> . STR REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (17) inst -> . STR REG COMMA LPC REG RPC
+    (18) inst -> . ADDV VEC COMMA VEC COMMA VEC
+    (19) inst -> . ADDV VEC COMMA VEC COMMA NUM NUMBER
+    (20) inst -> . SUBV VEC COMMA VEC COMMA VEC
+    (21) inst -> . SUBV VEC COMMA VEC COMMA NUM NUMBER
+    (22) inst -> . CIRRV VEC COMMA VEC COMMA REG
+    (23) inst -> . CIRRV VEC COMMA VEC COMMA NUM NUMBER
+    (24) inst -> . CIRLV VEC COMMA VEC COMMA REG
+    (25) inst -> . CIRLV VEC COMMA VEC COMMA NUM NUMBER
+    (26) inst -> . XORV VEC COMMA VEC COMMA REG
+    (27) inst -> . XORV VEC COMMA VEC COMMA NUM NUMBER
+    (28) inst -> . ALGV NUM NUMBER
+    (29) inst -> . REPEAT NUM NUMBER
+    (30) inst -> . LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (31) inst -> . LDRV VEC COMMA LPC REG RPC
+    (32) inst -> . STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (33) inst -> . STRV VEC COMMA LPC REG RPC
+    (34) empty -> .
+
+    ID              shift and go to state 5
+    NOP             shift and go to state 6
+    ADD             shift and go to state 7
+    SUB             shift and go to state 8
+    XOR             shift and go to state 9
+    LDR             shift and go to state 10
+    STR             shift and go to state 11
+    ADDV            shift and go to state 12
+    SUBV            shift and go to state 13
+    CIRRV           shift and go to state 14
+    CIRLV           shift and go to state 15
+    XORV            shift and go to state 16
+    ALGV            shift and go to state 17
+    REPEAT          shift and go to state 18
+    LDRV            shift and go to state 19
+    STRV            shift and go to state 20
+    $end            reduce using rule 34 (empty -> .)
+
+    inst                           shift and go to state 3
+    block                          shift and go to state 21
+    empty                          shift and go to state 4
+
+state 4
+
+    (3) block -> empty .
+
+    $end            reduce using rule 3 (block -> empty .)
+
+
+state 5
+
+    (4) inst -> ID . DP
+
+    DP              shift and go to state 22
+
+
+state 6
+
+    (5) inst -> NOP .
+
+    ID              reduce using rule 5 (inst -> NOP .)
+    NOP             reduce using rule 5 (inst -> NOP .)
+    ADD             reduce using rule 5 (inst -> NOP .)
+    SUB             reduce using rule 5 (inst -> NOP .)
+    XOR             reduce using rule 5 (inst -> NOP .)
+    LDR             reduce using rule 5 (inst -> NOP .)
+    STR             reduce using rule 5 (inst -> NOP .)
+    ADDV            reduce using rule 5 (inst -> NOP .)
+    SUBV            reduce using rule 5 (inst -> NOP .)
+    CIRRV           reduce using rule 5 (inst -> NOP .)
+    CIRLV           reduce using rule 5 (inst -> NOP .)
+    XORV            reduce using rule 5 (inst -> NOP .)
+    ALGV            reduce using rule 5 (inst -> NOP .)
+    REPEAT          reduce using rule 5 (inst -> NOP .)
+    LDRV            reduce using rule 5 (inst -> NOP .)
+    STRV            reduce using rule 5 (inst -> NOP .)
+    $end            reduce using rule 5 (inst -> NOP .)
+
+
+state 7
+
+    (6) inst -> ADD . REG COMMA REG COMMA REG
+    (7) inst -> ADD . REG COMMA REG COMMA NUM NUMBER
+
+    REG             shift and go to state 23
+
+
+state 8
+
+    (8) inst -> SUB . REG COMMA REG COMMA REG
+    (9) inst -> SUB . REG COMMA REG COMMA NUM NUMBER
+
+    REG             shift and go to state 24
+
+
+state 9
+
+    (10) inst -> XOR . REG COMMA REG COMMA REG
+    (11) inst -> XOR . REG COMMA REG COMMA NUM NUMBER
+
+    REG             shift and go to state 25
+
+
+state 10
+
+    (12) inst -> LDR . REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (13) inst -> LDR . REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (14) inst -> LDR . REG COMMA LPC REG RPC
+
+    REG             shift and go to state 26
+
+
+state 11
+
+    (15) inst -> STR . REG COMMA LPC REG RPC COMMA NUM NUMBER
+    (16) inst -> STR . REG COMMA LPC REG COMMA NUM NUMBER RPC
+    (17) inst -> STR . REG COMMA LPC REG RPC
+
+    REG             shift and go to state 27
+
+
+state 12
+
+    (18) inst -> ADDV . VEC COMMA VEC COMMA VEC
+    (19) inst -> ADDV . VEC COMMA VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 28
+
+
+state 13
+
+    (20) inst -> SUBV . VEC COMMA VEC COMMA VEC
+    (21) inst -> SUBV . VEC COMMA VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 29
+
+
+state 14
+
+    (22) inst -> CIRRV . VEC COMMA VEC COMMA REG
+    (23) inst -> CIRRV . VEC COMMA VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 30
+
+
+state 15
+
+    (24) inst -> CIRLV . VEC COMMA VEC COMMA REG
+    (25) inst -> CIRLV . VEC COMMA VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 31
+
+
+state 16
+
+    (26) inst -> XORV . VEC COMMA VEC COMMA REG
+    (27) inst -> XORV . VEC COMMA VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 32
+
+
+state 17
+
+    (28) inst -> ALGV . NUM NUMBER
+
+    NUM             shift and go to state 33
+
+
+state 18
+
+    (29) inst -> REPEAT . NUM NUMBER
+
+    NUM             shift and go to state 34
+
+
+state 19
+
+    (30) inst -> LDRV . VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (31) inst -> LDRV . VEC COMMA LPC REG RPC
+
+    VEC             shift and go to state 35
+
+
+state 20
+
+    (32) inst -> STRV . VEC COMMA LPC REG COMMA NUM NUMBER RPC
+    (33) inst -> STRV . VEC COMMA LPC REG RPC
+
+    VEC             shift and go to state 36
+
+
+state 21
+
+    (2) block -> inst block .
+
+    $end            reduce using rule 2 (block -> inst block .)
+
+
+state 22
+
+    (4) inst -> ID DP .
+
+    ID              reduce using rule 4 (inst -> ID DP .)
+    NOP             reduce using rule 4 (inst -> ID DP .)
+    ADD             reduce using rule 4 (inst -> ID DP .)
+    SUB             reduce using rule 4 (inst -> ID DP .)
+    XOR             reduce using rule 4 (inst -> ID DP .)
+    LDR             reduce using rule 4 (inst -> ID DP .)
+    STR             reduce using rule 4 (inst -> ID DP .)
+    ADDV            reduce using rule 4 (inst -> ID DP .)
+    SUBV            reduce using rule 4 (inst -> ID DP .)
+    CIRRV           reduce using rule 4 (inst -> ID DP .)
+    CIRLV           reduce using rule 4 (inst -> ID DP .)
+    XORV            reduce using rule 4 (inst -> ID DP .)
+    ALGV            reduce using rule 4 (inst -> ID DP .)
+    REPEAT          reduce using rule 4 (inst -> ID DP .)
+    LDRV            reduce using rule 4 (inst -> ID DP .)
+    STRV            reduce using rule 4 (inst -> ID DP .)
+    $end            reduce using rule 4 (inst -> ID DP .)
+
+
+state 23
+
+    (6) inst -> ADD REG . COMMA REG COMMA REG
+    (7) inst -> ADD REG . COMMA REG COMMA NUM NUMBER
+
+    COMMA           shift and go to state 37
+
+
+state 24
+
+    (8) inst -> SUB REG . COMMA REG COMMA REG
+    (9) inst -> SUB REG . COMMA REG COMMA NUM NUMBER
+
+    COMMA           shift and go to state 38
+
+
+state 25
+
+    (10) inst -> XOR REG . COMMA REG COMMA REG
+    (11) inst -> XOR REG . COMMA REG COMMA NUM NUMBER
+
+    COMMA           shift and go to state 39
+
+
+state 26
+
+    (12) inst -> LDR REG . COMMA LPC REG RPC COMMA NUM NUMBER
+    (13) inst -> LDR REG . COMMA LPC REG COMMA NUM NUMBER RPC
+    (14) inst -> LDR REG . COMMA LPC REG RPC
+
+    COMMA           shift and go to state 40
+
+
+state 27
+
+    (15) inst -> STR REG . COMMA LPC REG RPC COMMA NUM NUMBER
+    (16) inst -> STR REG . COMMA LPC REG COMMA NUM NUMBER RPC
+    (17) inst -> STR REG . COMMA LPC REG RPC
+
+    COMMA           shift and go to state 41
+
+
+state 28
+
+    (18) inst -> ADDV VEC . COMMA VEC COMMA VEC
+    (19) inst -> ADDV VEC . COMMA VEC COMMA NUM NUMBER
+
+    COMMA           shift and go to state 42
+
+
+state 29
+
+    (20) inst -> SUBV VEC . COMMA VEC COMMA VEC
+    (21) inst -> SUBV VEC . COMMA VEC COMMA NUM NUMBER
+
+    COMMA           shift and go to state 43
+
+
+state 30
+
+    (22) inst -> CIRRV VEC . COMMA VEC COMMA REG
+    (23) inst -> CIRRV VEC . COMMA VEC COMMA NUM NUMBER
+
+    COMMA           shift and go to state 44
+
+
+state 31
+
+    (24) inst -> CIRLV VEC . COMMA VEC COMMA REG
+    (25) inst -> CIRLV VEC . COMMA VEC COMMA NUM NUMBER
+
+    COMMA           shift and go to state 45
+
+
+state 32
+
+    (26) inst -> XORV VEC . COMMA VEC COMMA REG
+    (27) inst -> XORV VEC . COMMA VEC COMMA NUM NUMBER
+
+    COMMA           shift and go to state 46
+
+
+state 33
+
+    (28) inst -> ALGV NUM . NUMBER
+
+    NUMBER          shift and go to state 47
+
+
+state 34
+
+    (29) inst -> REPEAT NUM . NUMBER
+
+    NUMBER          shift and go to state 48
+
+
+state 35
+
+    (30) inst -> LDRV VEC . COMMA LPC REG COMMA NUM NUMBER RPC
+    (31) inst -> LDRV VEC . COMMA LPC REG RPC
+
+    COMMA           shift and go to state 49
+
+
+state 36
+
+    (32) inst -> STRV VEC . COMMA LPC REG COMMA NUM NUMBER RPC
+    (33) inst -> STRV VEC . COMMA LPC REG RPC
+
+    COMMA           shift and go to state 50
+
+
+state 37
+
+    (6) inst -> ADD REG COMMA . REG COMMA REG
+    (7) inst -> ADD REG COMMA . REG COMMA NUM NUMBER
+
+    REG             shift and go to state 51
+
+
+state 38
+
+    (8) inst -> SUB REG COMMA . REG COMMA REG
+    (9) inst -> SUB REG COMMA . REG COMMA NUM NUMBER
+
+    REG             shift and go to state 52
+
+
+state 39
+
+    (10) inst -> XOR REG COMMA . REG COMMA REG
+    (11) inst -> XOR REG COMMA . REG COMMA NUM NUMBER
+
+    REG             shift and go to state 53
+
+
+state 40
+
+    (12) inst -> LDR REG COMMA . LPC REG RPC COMMA NUM NUMBER
+    (13) inst -> LDR REG COMMA . LPC REG COMMA NUM NUMBER RPC
+    (14) inst -> LDR REG COMMA . LPC REG RPC
+
+    LPC             shift and go to state 54
+
+
+state 41
+
+    (15) inst -> STR REG COMMA . LPC REG RPC COMMA NUM NUMBER
+    (16) inst -> STR REG COMMA . LPC REG COMMA NUM NUMBER RPC
+    (17) inst -> STR REG COMMA . LPC REG RPC
+
+    LPC             shift and go to state 55
+
+
+state 42
+
+    (18) inst -> ADDV VEC COMMA . VEC COMMA VEC
+    (19) inst -> ADDV VEC COMMA . VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 56
+
+
+state 43
+
+    (20) inst -> SUBV VEC COMMA . VEC COMMA VEC
+    (21) inst -> SUBV VEC COMMA . VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 57
+
+
+state 44
+
+    (22) inst -> CIRRV VEC COMMA . VEC COMMA REG
+    (23) inst -> CIRRV VEC COMMA . VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 58
+
+
+state 45
+
+    (24) inst -> CIRLV VEC COMMA . VEC COMMA REG
+    (25) inst -> CIRLV VEC COMMA . VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 59
+
+
+state 46
+
+    (26) inst -> XORV VEC COMMA . VEC COMMA REG
+    (27) inst -> XORV VEC COMMA . VEC COMMA NUM NUMBER
+
+    VEC             shift and go to state 60
+
+
+state 47
+
+    (28) inst -> ALGV NUM NUMBER .
+
+    ID              reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    NOP             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    ADD             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    SUB             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    XOR             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    LDR             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    STR             reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    ADDV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    SUBV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    CIRRV           reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    CIRLV           reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    XORV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    ALGV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    REPEAT          reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    LDRV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    STRV            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+    $end            reduce using rule 28 (inst -> ALGV NUM NUMBER .)
+
+
+state 48
+
+    (29) inst -> REPEAT NUM NUMBER .
+
+    ID              reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    NOP             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    ADD             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    SUB             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    XOR             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    LDR             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    STR             reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    ADDV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    SUBV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    CIRRV           reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    CIRLV           reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    XORV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    ALGV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    REPEAT          reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    LDRV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    STRV            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+    $end            reduce using rule 29 (inst -> REPEAT NUM NUMBER .)
+
+
+state 49
+
+    (30) inst -> LDRV VEC COMMA . LPC REG COMMA NUM NUMBER RPC
+    (31) inst -> LDRV VEC COMMA . LPC REG RPC
+
+    LPC             shift and go to state 61
+
+
+state 50
+
+    (32) inst -> STRV VEC COMMA . LPC REG COMMA NUM NUMBER RPC
+    (33) inst -> STRV VEC COMMA . LPC REG RPC
+
+    LPC             shift and go to state 62
+
+
+state 51
+
+    (6) inst -> ADD REG COMMA REG . COMMA REG
+    (7) inst -> ADD REG COMMA REG . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 63
+
+
+state 52
+
+    (8) inst -> SUB REG COMMA REG . COMMA REG
+    (9) inst -> SUB REG COMMA REG . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 64
+
+
+state 53
+
+    (10) inst -> XOR REG COMMA REG . COMMA REG
+    (11) inst -> XOR REG COMMA REG . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 65
+
+
+state 54
+
+    (12) inst -> LDR REG COMMA LPC . REG RPC COMMA NUM NUMBER
+    (13) inst -> LDR REG COMMA LPC . REG COMMA NUM NUMBER RPC
+    (14) inst -> LDR REG COMMA LPC . REG RPC
+
+    REG             shift and go to state 66
+
+
+state 55
+
+    (15) inst -> STR REG COMMA LPC . REG RPC COMMA NUM NUMBER
+    (16) inst -> STR REG COMMA LPC . REG COMMA NUM NUMBER RPC
+    (17) inst -> STR REG COMMA LPC . REG RPC
+
+    REG             shift and go to state 67
+
+
+state 56
+
+    (18) inst -> ADDV VEC COMMA VEC . COMMA VEC
+    (19) inst -> ADDV VEC COMMA VEC . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 68
+
+
+state 57
+
+    (20) inst -> SUBV VEC COMMA VEC . COMMA VEC
+    (21) inst -> SUBV VEC COMMA VEC . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 69
+
+
+state 58
+
+    (22) inst -> CIRRV VEC COMMA VEC . COMMA REG
+    (23) inst -> CIRRV VEC COMMA VEC . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 70
+
+
+state 59
+
+    (24) inst -> CIRLV VEC COMMA VEC . COMMA REG
+    (25) inst -> CIRLV VEC COMMA VEC . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 71
+
+
+state 60
+
+    (26) inst -> XORV VEC COMMA VEC . COMMA REG
+    (27) inst -> XORV VEC COMMA VEC . COMMA NUM NUMBER
+
+    COMMA           shift and go to state 72
+
+
+state 61
+
+    (30) inst -> LDRV VEC COMMA LPC . REG COMMA NUM NUMBER RPC
+    (31) inst -> LDRV VEC COMMA LPC . REG RPC
+
+    REG             shift and go to state 73
+
+
+state 62
+
+    (32) inst -> STRV VEC COMMA LPC . REG COMMA NUM NUMBER RPC
+    (33) inst -> STRV VEC COMMA LPC . REG RPC
+
+    REG             shift and go to state 74
+
+
+state 63
+
+    (6) inst -> ADD REG COMMA REG COMMA . REG
+    (7) inst -> ADD REG COMMA REG COMMA . NUM NUMBER
+
+    REG             shift and go to state 75
+    NUM             shift and go to state 76
+
+
+state 64
+
+    (8) inst -> SUB REG COMMA REG COMMA . REG
+    (9) inst -> SUB REG COMMA REG COMMA . NUM NUMBER
+
+    REG             shift and go to state 77
+    NUM             shift and go to state 78
+
+
+state 65
+
+    (10) inst -> XOR REG COMMA REG COMMA . REG
+    (11) inst -> XOR REG COMMA REG COMMA . NUM NUMBER
+
+    REG             shift and go to state 79
+    NUM             shift and go to state 80
+
+
+state 66
+
+    (12) inst -> LDR REG COMMA LPC REG . RPC COMMA NUM NUMBER
+    (13) inst -> LDR REG COMMA LPC REG . COMMA NUM NUMBER RPC
+    (14) inst -> LDR REG COMMA LPC REG . RPC
+
+    RPC             shift and go to state 82
+    COMMA           shift and go to state 81
+
+
+state 67
+
+    (15) inst -> STR REG COMMA LPC REG . RPC COMMA NUM NUMBER
+    (16) inst -> STR REG COMMA LPC REG . COMMA NUM NUMBER RPC
+    (17) inst -> STR REG COMMA LPC REG . RPC
+
+    RPC             shift and go to state 84
+    COMMA           shift and go to state 83
+
+
+state 68
+
+    (18) inst -> ADDV VEC COMMA VEC COMMA . VEC
+    (19) inst -> ADDV VEC COMMA VEC COMMA . NUM NUMBER
+
+    VEC             shift and go to state 85
+    NUM             shift and go to state 86
+
+
+state 69
+
+    (20) inst -> SUBV VEC COMMA VEC COMMA . VEC
+    (21) inst -> SUBV VEC COMMA VEC COMMA . NUM NUMBER
+
+    VEC             shift and go to state 87
+    NUM             shift and go to state 88
+
+
+state 70
+
+    (22) inst -> CIRRV VEC COMMA VEC COMMA . REG
+    (23) inst -> CIRRV VEC COMMA VEC COMMA . NUM NUMBER
+
+    REG             shift and go to state 89
+    NUM             shift and go to state 90
+
+
+state 71
+
+    (24) inst -> CIRLV VEC COMMA VEC COMMA . REG
+    (25) inst -> CIRLV VEC COMMA VEC COMMA . NUM NUMBER
+
+    REG             shift and go to state 91
+    NUM             shift and go to state 92
+
+
+state 72
+
+    (26) inst -> XORV VEC COMMA VEC COMMA . REG
+    (27) inst -> XORV VEC COMMA VEC COMMA . NUM NUMBER
+
+    REG             shift and go to state 93
+    NUM             shift and go to state 94
+
+
+state 73
+
+    (30) inst -> LDRV VEC COMMA LPC REG . COMMA NUM NUMBER RPC
+    (31) inst -> LDRV VEC COMMA LPC REG . RPC
+
+    COMMA           shift and go to state 95
+    RPC             shift and go to state 96
+
+
+state 74
+
+    (32) inst -> STRV VEC COMMA LPC REG . COMMA NUM NUMBER RPC
+    (33) inst -> STRV VEC COMMA LPC REG . RPC
+
+    COMMA           shift and go to state 97
+    RPC             shift and go to state 98
+
+
+state 75
+
+    (6) inst -> ADD REG COMMA REG COMMA REG .
+
+    ID              reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    NOP             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    ADD             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    SUB             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    XOR             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    LDR             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    STR             reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    ADDV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    SUBV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    CIRRV           reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    CIRLV           reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    XORV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    ALGV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    REPEAT          reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    LDRV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    STRV            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+    $end            reduce using rule 6 (inst -> ADD REG COMMA REG COMMA REG .)
+
+
+state 76
+
+    (7) inst -> ADD REG COMMA REG COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 99
+
+
+state 77
+
+    (8) inst -> SUB REG COMMA REG COMMA REG .
+
+    ID              reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    NOP             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    ADD             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    SUB             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    XOR             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    LDR             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    STR             reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    ADDV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    SUBV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    CIRRV           reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    CIRLV           reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    XORV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    ALGV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    REPEAT          reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    LDRV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    STRV            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+    $end            reduce using rule 8 (inst -> SUB REG COMMA REG COMMA REG .)
+
+
+state 78
+
+    (9) inst -> SUB REG COMMA REG COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 100
+
+
+state 79
+
+    (10) inst -> XOR REG COMMA REG COMMA REG .
+
+    ID              reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    NOP             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    ADD             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    SUB             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    XOR             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    LDR             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    STR             reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    ADDV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    SUBV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    CIRRV           reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    CIRLV           reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    XORV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    ALGV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    REPEAT          reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    LDRV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    STRV            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+    $end            reduce using rule 10 (inst -> XOR REG COMMA REG COMMA REG .)
+
+
+state 80
+
+    (11) inst -> XOR REG COMMA REG COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 101
+
+
+state 81
+
+    (13) inst -> LDR REG COMMA LPC REG COMMA . NUM NUMBER RPC
+
+    NUM             shift and go to state 102
+
+
+state 82
+
+    (12) inst -> LDR REG COMMA LPC REG RPC . COMMA NUM NUMBER
+    (14) inst -> LDR REG COMMA LPC REG RPC .
+
+    COMMA           shift and go to state 103
+    ID              reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    NOP             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    ADD             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    SUB             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    XOR             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    LDR             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    STR             reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    ADDV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    SUBV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    CIRRV           reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    CIRLV           reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    XORV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    ALGV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    REPEAT          reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    LDRV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    STRV            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+    $end            reduce using rule 14 (inst -> LDR REG COMMA LPC REG RPC .)
+
+
+state 83
+
+    (16) inst -> STR REG COMMA LPC REG COMMA . NUM NUMBER RPC
+
+    NUM             shift and go to state 104
+
+
+state 84
+
+    (15) inst -> STR REG COMMA LPC REG RPC . COMMA NUM NUMBER
+    (17) inst -> STR REG COMMA LPC REG RPC .
+
+    COMMA           shift and go to state 105
+    ID              reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    NOP             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    ADD             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    SUB             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    XOR             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    LDR             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    STR             reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    ADDV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    SUBV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    CIRRV           reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    CIRLV           reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    XORV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    ALGV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    REPEAT          reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    LDRV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    STRV            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+    $end            reduce using rule 17 (inst -> STR REG COMMA LPC REG RPC .)
+
+
+state 85
+
+    (18) inst -> ADDV VEC COMMA VEC COMMA VEC .
+
+    ID              reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    NOP             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    ADD             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    SUB             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    XOR             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    LDR             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    STR             reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    ADDV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    SUBV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    CIRRV           reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    CIRLV           reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    XORV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    ALGV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    REPEAT          reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    LDRV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    STRV            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+    $end            reduce using rule 18 (inst -> ADDV VEC COMMA VEC COMMA VEC .)
+
+
+state 86
+
+    (19) inst -> ADDV VEC COMMA VEC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 106
+
+
+state 87
+
+    (20) inst -> SUBV VEC COMMA VEC COMMA VEC .
+
+    ID              reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    NOP             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    ADD             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    SUB             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    XOR             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    LDR             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    STR             reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    ADDV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    SUBV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    CIRRV           reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    CIRLV           reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    XORV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    ALGV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    REPEAT          reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    LDRV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    STRV            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+    $end            reduce using rule 20 (inst -> SUBV VEC COMMA VEC COMMA VEC .)
+
+
+state 88
+
+    (21) inst -> SUBV VEC COMMA VEC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 107
+
+
+state 89
+
+    (22) inst -> CIRRV VEC COMMA VEC COMMA REG .
+
+    ID              reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    NOP             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    ADD             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    SUB             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    XOR             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    LDR             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    STR             reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    ADDV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    SUBV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    CIRRV           reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    CIRLV           reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    XORV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    ALGV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    REPEAT          reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    LDRV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    STRV            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+    $end            reduce using rule 22 (inst -> CIRRV VEC COMMA VEC COMMA REG .)
+
+
+state 90
+
+    (23) inst -> CIRRV VEC COMMA VEC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 108
+
+
+state 91
+
+    (24) inst -> CIRLV VEC COMMA VEC COMMA REG .
+
+    ID              reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    NOP             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    ADD             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    SUB             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    XOR             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    LDR             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    STR             reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    ADDV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    SUBV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    CIRRV           reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    CIRLV           reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    XORV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    ALGV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    REPEAT          reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    LDRV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    STRV            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+    $end            reduce using rule 24 (inst -> CIRLV VEC COMMA VEC COMMA REG .)
+
+
+state 92
+
+    (25) inst -> CIRLV VEC COMMA VEC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 109
+
+
+state 93
+
+    (26) inst -> XORV VEC COMMA VEC COMMA REG .
+
+    ID              reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    NOP             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    ADD             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    SUB             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    XOR             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    LDR             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    STR             reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    ADDV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    SUBV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    CIRRV           reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    CIRLV           reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    XORV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    ALGV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    REPEAT          reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    LDRV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    STRV            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+    $end            reduce using rule 26 (inst -> XORV VEC COMMA VEC COMMA REG .)
+
+
+state 94
+
+    (27) inst -> XORV VEC COMMA VEC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 110
+
+
+state 95
+
+    (30) inst -> LDRV VEC COMMA LPC REG COMMA . NUM NUMBER RPC
+
+    NUM             shift and go to state 111
+
+
+state 96
+
+    (31) inst -> LDRV VEC COMMA LPC REG RPC .
+
+    ID              reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    NOP             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    ADD             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    SUB             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    XOR             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    LDR             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    STR             reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    ADDV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    SUBV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    CIRRV           reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    CIRLV           reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    XORV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    ALGV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    REPEAT          reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    LDRV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    STRV            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+    $end            reduce using rule 31 (inst -> LDRV VEC COMMA LPC REG RPC .)
+
+
+state 97
+
+    (32) inst -> STRV VEC COMMA LPC REG COMMA . NUM NUMBER RPC
+
+    NUM             shift and go to state 112
+
+
+state 98
+
+    (33) inst -> STRV VEC COMMA LPC REG RPC .
+
+    ID              reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    NOP             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    ADD             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    SUB             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    XOR             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    LDR             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    STR             reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    ADDV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    SUBV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    CIRRV           reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    CIRLV           reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    XORV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    ALGV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    REPEAT          reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    LDRV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    STRV            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+    $end            reduce using rule 33 (inst -> STRV VEC COMMA LPC REG RPC .)
+
+
+state 99
+
+    (7) inst -> ADD REG COMMA REG COMMA NUM NUMBER .
+
+    ID              reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    NOP             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    ADD             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    SUB             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    XOR             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    LDR             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    STR             reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    ADDV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    SUBV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    XORV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    ALGV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    LDRV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    STRV            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+    $end            reduce using rule 7 (inst -> ADD REG COMMA REG COMMA NUM NUMBER .)
+
+
+state 100
+
+    (9) inst -> SUB REG COMMA REG COMMA NUM NUMBER .
+
+    ID              reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    NOP             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    ADD             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    SUB             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    XOR             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    LDR             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    STR             reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    ADDV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    SUBV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    XORV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    ALGV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    LDRV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    STRV            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+    $end            reduce using rule 9 (inst -> SUB REG COMMA REG COMMA NUM NUMBER .)
+
+
+state 101
+
+    (11) inst -> XOR REG COMMA REG COMMA NUM NUMBER .
+
+    ID              reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    NOP             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    ADD             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    SUB             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    XOR             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    LDR             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    STR             reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    ADDV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    SUBV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    XORV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    ALGV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    LDRV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    STRV            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+    $end            reduce using rule 11 (inst -> XOR REG COMMA REG COMMA NUM NUMBER .)
+
+
+state 102
+
+    (13) inst -> LDR REG COMMA LPC REG COMMA NUM . NUMBER RPC
+
+    NUMBER          shift and go to state 113
+
+
+state 103
+
+    (12) inst -> LDR REG COMMA LPC REG RPC COMMA . NUM NUMBER
+
+    NUM             shift and go to state 114
+
+
+state 104
+
+    (16) inst -> STR REG COMMA LPC REG COMMA NUM . NUMBER RPC
+
+    NUMBER          shift and go to state 115
+
+
+state 105
+
+    (15) inst -> STR REG COMMA LPC REG RPC COMMA . NUM NUMBER
+
+    NUM             shift and go to state 116
+
+
+state 106
+
+    (19) inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .
+
+    ID              reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    NOP             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADD             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUB             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    XOR             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDR             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    STR             reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    XORV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    STRV            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+    $end            reduce using rule 19 (inst -> ADDV VEC COMMA VEC COMMA NUM NUMBER .)
+
+
+state 107
+
+    (21) inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .
+
+    ID              reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    NOP             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADD             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUB             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    XOR             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDR             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    STR             reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    XORV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    STRV            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+    $end            reduce using rule 21 (inst -> SUBV VEC COMMA VEC COMMA NUM NUMBER .)
+
+
+state 108
+
+    (23) inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .
+
+    ID              reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    NOP             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADD             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUB             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    XOR             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDR             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    STR             reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    XORV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    STRV            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+    $end            reduce using rule 23 (inst -> CIRRV VEC COMMA VEC COMMA NUM NUMBER .)
+
+
+state 109
+
+    (25) inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .
+
+    ID              reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    NOP             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADD             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUB             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    XOR             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDR             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    STR             reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    XORV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    STRV            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+    $end            reduce using rule 25 (inst -> CIRLV VEC COMMA VEC COMMA NUM NUMBER .)
+
+
+state 110
+
+    (27) inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .
+
+    ID              reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    NOP             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADD             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUB             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    XOR             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDR             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    STR             reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    XORV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    STRV            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+    $end            reduce using rule 27 (inst -> XORV VEC COMMA VEC COMMA NUM NUMBER .)
+
+
+state 111
+
+    (30) inst -> LDRV VEC COMMA LPC REG COMMA NUM . NUMBER RPC
+
+    NUMBER          shift and go to state 117
+
+
+state 112
+
+    (32) inst -> STRV VEC COMMA LPC REG COMMA NUM . NUMBER RPC
+
+    NUMBER          shift and go to state 118
+
+
+state 113
+
+    (13) inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER . RPC
+
+    RPC             shift and go to state 119
+
+
+state 114
+
+    (12) inst -> LDR REG COMMA LPC REG RPC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 120
+
+
+state 115
+
+    (16) inst -> STR REG COMMA LPC REG COMMA NUM NUMBER . RPC
+
+    RPC             shift and go to state 121
+
+
+state 116
+
+    (15) inst -> STR REG COMMA LPC REG RPC COMMA NUM . NUMBER
+
+    NUMBER          shift and go to state 122
+
+
+state 117
+
+    (30) inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER . RPC
+
+    RPC             shift and go to state 123
+
+
+state 118
+
+    (32) inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER . RPC
+
+    RPC             shift and go to state 124
+
+
+state 119
+
+    (13) inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .
+
+    ID              reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    NOP             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADD             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUB             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XOR             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDR             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STR             reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADDV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUBV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRRV           reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRLV           reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XORV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ALGV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    REPEAT          reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDRV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STRV            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    $end            reduce using rule 13 (inst -> LDR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+
+
+state 120
+
+    (12) inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .
+
+    ID              reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    NOP             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ADD             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    SUB             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    XOR             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    LDR             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    STR             reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    XORV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    STRV            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    $end            reduce using rule 12 (inst -> LDR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+
+
+state 121
+
+    (16) inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .
+
+    ID              reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    NOP             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADD             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUB             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XOR             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDR             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STR             reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADDV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUBV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRRV           reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRLV           reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XORV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ALGV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    REPEAT          reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDRV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STRV            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+    $end            reduce using rule 16 (inst -> STR REG COMMA LPC REG COMMA NUM NUMBER RPC .)
+
+
+state 122
+
+    (15) inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .
+
+    ID              reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    NOP             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ADD             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    SUB             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    XOR             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    LDR             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    STR             reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ADDV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    SUBV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    CIRRV           reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    CIRLV           reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    XORV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    ALGV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    REPEAT          reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    LDRV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    STRV            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+    $end            reduce using rule 15 (inst -> STR REG COMMA LPC REG RPC COMMA NUM NUMBER .)
+
+
+state 123
+
+    (30) inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .
+
+    ID              reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    NOP             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADD             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUB             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XOR             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDR             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STR             reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADDV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUBV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRRV           reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRLV           reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XORV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ALGV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    REPEAT          reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDRV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STRV            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    $end            reduce using rule 30 (inst -> LDRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+
+
+state 124
+
+    (32) inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .
+
+    ID              reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    NOP             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADD             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUB             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XOR             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDR             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STR             reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ADDV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    SUBV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRRV           reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    CIRLV           reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    XORV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    ALGV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    REPEAT          reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    LDRV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    STRV            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+    $end            reduce using rule 32 (inst -> STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC .)
+

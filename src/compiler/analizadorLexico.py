@@ -14,7 +14,7 @@ tokens = ['ID', 'RPC', 'LPC', 'NUMBER', 'REG',
           'VEC', 'COMMA', 'MINUS', 'NUM', 'DP']
 
 
-kword = ['ADD', 'SUB', 'NOP', 'STR', 'LDR', 'ADDV', 'XOR', 'FIN',
+kword = ['ADD', 'SUB', 'NOP', 'STR', 'LDR', 'ADDV', 'XOR',
          'SUBV', 'XORV', 'CIRRV', 'CIRLV', 'ALGV', 'STRV', 'LDRV', 'REPEAT']
 
 
@@ -144,12 +144,6 @@ def t_REG(t):
 
 def t_VEC(t):
     r'[vV][0-9]+'
-    t.value = t.value.upper()
-    return t
-
-
-def t_FIN(t):
-    r'[FIN|fin]'
     t.value = t.value.upper()
     return t
 

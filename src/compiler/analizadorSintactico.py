@@ -44,10 +44,6 @@ def p_instNop(p):  # LISTO##LISTO#
     p[0] = {1: "NOP", 2: "END"}
 
 
-def p_FIN(p):
-    '''inst : FIN'''
-    p[0] = {1: "FIN", 2: "END"}
-
 ##################### Basic Instructions #####################
 
 
@@ -84,14 +80,14 @@ def p_instXORImm(p):  # LISTO##LISTO#
     p[0] = {1: "XORI", 2: p[2], 3: p[4], 4: int(p[7]), 5: "END"}
 
 
-def p_instLdrR(p):  # LISTO##LISTO#
-    '''inst : LDR REG COMMA LPC REG RPC COMMA REG'''
-    p[0] = {1: "LDRR", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
+# def p_instLdrR(p):  # LISTO##LISTO#
+#     '''inst : LDR REG COMMA LPC REG RPC COMMA REG'''
+#     p[0] = {1: "LDRR", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
 
 
-def p_instLdrMR(p):  # LISTO##LISTO#
-    '''inst : LDR REG COMMA LPC REG RPC COMMA MINUS REG'''
-    p[0] = {1: "LDR-R", 2: p[2], 3: p[5], 4: p[9], 5: "END"}
+# def p_instLdrMR(p):  # LISTO##LISTO#
+#     '''inst : LDR REG COMMA LPC REG RPC COMMA MINUS REG'''
+#     p[0] = {1: "LDR-R", 2: p[2], 3: p[5], 4: p[9], 5: "END"}
 
 
 def p_instLdrImm(p):  # LISTO##LISTO#
@@ -110,25 +106,23 @@ def p_instLdr(p):  # LISTO##LISTO#
     p[0] = {1: "LDR", 2: p[2], 3: p[5], 4: 0, 5: "END"}
 
 
-def p_instStrR(p):  # LISTO##LISTO#
-    '''inst : STR REG COMMA LPC REG RPC COMMA REG'''
-    p[0] = {1: "STRR", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
+# def p_instStrR(p):  # LISTO##LISTO#
+#     '''inst : STR REG COMMA LPC REG RPC COMMA REG'''
+#     p[0] = {1: "STRR", 2: p[2], 3: p[5], 4: p[8], 5: "END"}
 
-
-def p_instStrRI(p):  # LISTO##LISTO#
-    '''inst : STR REG COMMA LPC REG COMMA NUM NUMBER RPC'''
-    p[0] = {1: "STRRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
-
-
-def p_instStrMR(p):  # LISTO##LISTO#
-    '''inst : STR REG COMMA LPC REG RPC COMMA MINUS REG'''
-    p[0] = {1: "STR-R", 2: p[2], 3: p[5], 4: p[9], 5: "END"}
-
+# def p_instStrMR(p):  # LISTO##LISTO#
+#     '''inst : STR REG COMMA LPC REG RPC COMMA MINUS REG'''
+#     p[0] = {1: "STR-R", 2: p[2], 3: p[5], 4: p[9], 5: "END"}
 
 def p_instStrImm(p):  # LISTO##LISTO#
     '''inst : STR REG COMMA LPC REG RPC COMMA NUM NUMBER'''
     p[9] = int(p[9])
     p[0] = {1: "STRI", 2: p[2], 3: p[5], 4: int(p[9]), 5: "END"}
+
+
+def p_instStrRI(p):  # LISTO##LISTO#
+    '''inst : STR REG COMMA LPC REG COMMA NUM NUMBER RPC'''
+    p[0] = {1: "STRRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 
 def p_instStr(p):  # LISTO##LISTO#
@@ -205,18 +199,18 @@ def p_instLdrVRI(p):
 
 
 def p_instLdrVRIOwn(p):
-    '''inst : LDRV VEC COMMA LPC NUM NUMBER RPC'''
-    p[0] = {1: "LDRVIO", 2: p[2], 4: int(p[6]), 5: "END"}
+    '''inst : LDRV VEC COMMA LPC REG RPC'''
+    p[0] = {1: "LDRVIO", 2: p[2], 4: p[5], 5: "END"}
 
 
 def p_instStrVRI(p):
     '''inst : STRV VEC COMMA LPC REG COMMA NUM NUMBER RPC'''
-    p[0] = {1: "STRVI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
+    p[0] = {1: "STRVRI", 2: p[2], 3: p[5], 4: int(p[8]), 5: "END"}
 
 
 def p_instStrVRIOwn(p):
-    '''inst : STRV VEC COMMA LPC NUM NUMBER RPC'''
-    p[0] = {1: "STRVIO", 2: p[2], 4: int(p[6]), 5: "END"}
+    '''inst : STRV VEC COMMA LPC REG RPC'''
+    p[0] = {1: "STRVIO", 2: p[2], 4: p[5], 5: "END"}
 
 
 ##################### Other Instructions #####################
@@ -258,15 +252,6 @@ def divInst(lista):
             r.append(lista[c:x])
             c = x+1
     return r
-
-
-def withOutNop(lista):
-    x = []
-    print(lista)
-    size = len(lista) - 1
-    for i in range(0, size):
-        if(lista[i] == 'NOP'):
-            print("HERE")
 
 
 SemanticList = []
