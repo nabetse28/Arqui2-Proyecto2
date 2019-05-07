@@ -8,15 +8,16 @@ A = 0
 RD = 0
 WE = 0
 
+
 MEMORY_ARRAY = []
 
 
-def toBinary_8(number):
+def toBinary(number, zeros):
     binary = bin(number)
     resBinary = binary[2:]
-    # print(resBinary)
-    if(len(resBinary) < 8):
-        n = 8 - len(resBinary)
+    print(resBinary)
+    if(len(resBinary) < zeros):
+        n = zeros - len(resBinary)
         cont = 0
         res = ''
         while(cont < n):
@@ -24,11 +25,11 @@ def toBinary_8(number):
             cont += 1
 
         res += resBinary
-        # print(res)
+        print(res)
         return res
-    elif(len(resBinary) > 8):
+    elif(len(resBinary) > zeros):
         n = len(resBinary)
-        indicate = n - 8
+        indicate = n - zeros
 
         cont = 0
         res = ''
@@ -39,10 +40,10 @@ def toBinary_8(number):
 
             cont += 1
 
-        # print(res)
+        print(res)
         return res
     else:
-        # print(resBinary)
+        print(resBinary)
         return resBinary
 
 
@@ -73,6 +74,9 @@ class Fetch:
             else:
                 print("NOT FETCH CLOCK")
                 time.sleep(1)
+
+    def startInstructionMemory(self):
+        print()
 
     def noClock(self):
         global clock
@@ -151,9 +155,9 @@ class Memory:
                     l2 = pix_val[cont+1][0]
                     l3 = pix_val[cont+2][0]
 
-                    mem_l.append([toBinary_8(l1)])
-                    mem_l.append([toBinary_8(l2)])
-                    mem_l.append([toBinary_8(l3)])
+                    mem_l.append([toBinary(l1, 8)])
+                    mem_l.append([toBinary(l2, 8)])
+                    mem_l.append([toBinary(l3, 8)])
 
                     MEMORY_ARRAY.append(mem_l)
                 else:
@@ -168,18 +172,18 @@ class Memory:
                     l3 = pix_val[cont+2][0]
                     l4 = pix_val[cont+3][0]
 
-                    mem_l.append([toBinary_8(l1)])
-                    mem_l.append([toBinary_8(l2)])
-                    mem_l.append([toBinary_8(l3)])
-                    mem_l.append([toBinary_8(l4)])
+                    mem_l.append([toBinary(l1, 8)])
+                    mem_l.append([toBinary(l2, 8)])
+                    mem_l.append([toBinary(l3, 8)])
+                    mem_l.append([toBinary(l4, 8)])
 
                     MEMORY_ARRAY.append(mem_l)
 
             else:
-                mem_l.append([toBinary_8(0)])
-                mem_l.append([toBinary_8(0)])
-                mem_l.append([toBinary_8(0)])
-                mem_l.append([toBinary_8(0)])
+                mem_l.append([toBinary(0, 8)])
+                mem_l.append([toBinary(0, 8)])
+                mem_l.append([toBinary(0, 8)])
+                mem_l.append([toBinary(0, 8)])
 
                 MEMORY_ARRAY.append(mem_l)
 
@@ -234,7 +238,7 @@ def main():
     x = input("1. All or 2. You: ")
 
     mem = Memory()
-    mem.loadImage()
+    # mem.loadImage()
 
     # if(str(x) == "1"):
 
@@ -294,4 +298,5 @@ def main():
     #     print("Error")
 
 
-main()
+# main()
+toBinary(200, 12)
