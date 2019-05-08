@@ -7,9 +7,23 @@ FLAG_PROCESSOR = True
 A = 0
 RD = 0
 WE = 0
-
+PC = 0
+PCF = 0
+INSTF = []
+INSTD = []
+ALURESULTE = ''
 
 MEMORY_ARRAY = []
+INSTRUCTION_MEMORY = []
+REGISTERS = {"0000": [], "0001": [], "0010": [], "0011": [],
+             "0100": [], "0101": [], "0110": [], "0111": [],
+             "1000": [], "1001": [], "1010": [], "1011": [],
+             "1100": [], "1101": [], "1110": [], "1111": []}
+
+VECTORS = {"0000": [], "0001": [], "0010": [], "0011": [],
+           "0100": [], "0101": [], "0110": [], "0111": [],
+           "1000": [], "1001": [], "1010": [], "1011": [],
+           "1100": [], "1101": [], "1110": [], "1111": []}
 
 
 def toBinary(number, zeros):
@@ -47,6 +61,31 @@ def toBinary(number, zeros):
         return resBinary
 
 
+def toDecimal(number):
+    res = '0b' + number
+    return int(res, 2)
+
+
+def circularMoveRight(srcA, srcB):
+    cont = 0
+    res = ''
+    while(cont < srcB):
+        res = srcA[-1] + srcA[:-1]
+        cont += 1
+
+    return res
+
+
+def circularMoveLeft(srcA, srcB):
+    cont = 0
+    res = ''
+    while(cont < srcB):
+        res = srcA[1:] + srcA[0]
+        cont += 1
+
+    return res
+
+
 class Clock:
 
     def start(self):
@@ -63,20 +102,143 @@ class Clock:
             print("clock: " + str(clock))
 
 
-class Fetch:
+class ALU:
+
+    def process8Bits(self, srcAE, srcBE, ALUControlE):
+
+        if(ALUControlE == '0100'):
+            A = toDecimal(srcAE)
+            B = toDecimal(srcBE)
+            res = A + B
+        elif(ALUControlE == '0010'):
+            A = toDecimal(srcAE)
+            B = toDecimal(srcBE)
+            res = A - B
+        elif(ALUControlE == '0001'):
+            A = toDecimal(srcAE)
+            B = toDecimal(srcBE)
+            res = A ^ B
+        elif(ALUControlE == '1000'):
+            res = circularMoveRight(srcAE, toDecimal(srcBE))
+        elif(ALUControlE == '1001'):
+            res = circularMoveLeft(srcAE, toDecimal(srcBE))
+
+    def processRegisterImm(self, srcAE, srcBE, ALUControlE):
+        if(ALUControlE == '0100'):
+            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            A = toDecimal(Abin)
+            B = toDecimal(srcBE)
+            res = A + B
+        elif(ALUControlE == '0010'):
+            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            A = toDecimal(Abin)
+            B = toDecimal(srcBE)
+            res = A - B
+        elif(ALUControlE == '0001'):
+            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            A = toDecimal(Abin)
+            B = toDecimal(srcBE)
+            res = A ^ B
+        elif(ALUControlE == '1000'):
+            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            res = circularMoveRight(Abin, toDecimal(srcBE))
+        elif(ALUControlE == '1001'):
+            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            res = circularMoveLeft(Abin, toDecimal(srcBE))
+
+
+class pipeFD:
+    def __init__(self, instF, instD):
+        self.instF = instF
+        self.instD = instD
 
     def start(self):
         global clock
         while(True):
             if(clock):
+                if(self.instF != -1):
+                    self.instF = INSTF
+
+                print("PIPE FD CLOCK")
+                time.sleep(1)
+            else:
+                self.instD = INSTD
+                print("NOT PIPE FD CLOCK")
+                time.sleep(1)
+
+
+class pipeDE:
+    def start(self):
+        global clock
+        while(True):
+            if(clock):
+
+                print("PIPE DE CLOCK")
+                time.sleep(1)
+            else:
+                print("NOT PIPE DE CLOCK")
+                time.sleep(1)
+
+
+class pipeEM:
+    def start(self):
+        global clock
+        while(True):
+            if(clock):
+
+                print("PIPE EM CLOCK")
+                time.sleep(1)
+            else:
+                print("NOT PIPE EM CLOCK")
+                time.sleep(1)
+
+
+class pipeMW:
+    def __init__(self, pcSrcM, regWriteM, memToRegM):
+        self.pcSrcM = pcSrcM
+        self.regWriteM = regWriteM
+        self.memToRegM = memToRegM
+
+    def start(self):
+        global clock
+        while(True):
+            if(clock):
+
+                print("PIPE MW CLOCK")
+                time.sleep(1)
+            else:
+                print("NOT PIPE MW CLOCK")
+                time.sleep(1)
+
+
+class Fetch:
+    def __init__(self, A, RD):
+        self.A = A
+        self.RD = RD
+
+    def start(self):
+        global clock
+        while(True):
+            if(clock):
+                self.A = PCF
+                self.RD = INSTRUCTION_MEMORY[self.A]
                 print("FETCH CLOCK")
                 time.sleep(1)
             else:
+                INSTF = self.RD
                 print("NOT FETCH CLOCK")
                 time.sleep(1)
 
     def startInstructionMemory(self):
-        print()
+        f = open("../compiler/codeBin.rs", "r")
+
+        content = f.read()
+
+        INSTRUCTION_MEMORY = content.split("\n")
+
+        INSTRUCTION_MEMORY = INSTRUCTION_MEMORY[:len(INSTRUCTION_MEMORY)-1]
+
+        print(INSTRUCTION_MEMORY)
 
     def noClock(self):
         global clock
@@ -92,6 +254,7 @@ class Decode:
         global clock
         while(True):
             if(clock):
+
                 print("DECODE CLOCK")
                 time.sleep(1)
             else:
@@ -158,6 +321,7 @@ class Memory:
                     mem_l.append([toBinary(l1, 8)])
                     mem_l.append([toBinary(l2, 8)])
                     mem_l.append([toBinary(l3, 8)])
+                    mem_l.append([toBinary(0, 8)])
 
                     MEMORY_ARRAY.append(mem_l)
                 else:
@@ -237,7 +401,9 @@ def main():
     print("Do you want to run it you or all???\n")
     x = input("1. All or 2. You: ")
 
-    mem = Memory()
+    fetch = Fetch(-1, -1)
+    fetch.startInstructionMemory()
+    # mem = Memory()
     # mem.loadImage()
 
     # if(str(x) == "1"):
@@ -298,5 +464,5 @@ def main():
     #     print("Error")
 
 
-# main()
-toBinary(200, 12)
+main()
+# toBinary(200, 12)
