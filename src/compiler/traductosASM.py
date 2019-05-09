@@ -93,7 +93,11 @@ def traducir(l):
 
         ################## SCALAR ##################
         if(x[0] == 'ADD'):
-            i = '111000001000'
+            i = '1110'  # COND
+            i += '00'  # OP
+            i += '0'  # I
+            i += '0'  # V if vector
+            i += '0100'  # CMD
             i += regs[x[2]]
             i += regs[x[1]]
             i += '00000000'
@@ -101,16 +105,28 @@ def traducir(l):
             cM += [i]
         elif(x[0] == 'ADDI'):
             if(int(x[3]) >= 0):
-                i = '111000101000'
+                i = '1110'  # COND
+                i += '00'  # OP
+                i += '1'  # I
+                i += '0'  # V if vector
+                i += '0100'  # CMD
             else:
-                i = '111000100100'
+                i = '1110'  # COND
+                i += '00'  # OP
+                i += '1'  # I
+                i += '0'  # V if vector
+                i += '0010'  # CMD
             i += regs[x[2]]
             i += regs[x[1]]
             i += '0000'
             i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         elif(x[0] == 'SUB'):
-            i = '111000000100'
+            i = '1110'  # COND
+            i += '00'  # OP
+            i += '0'  # I
+            i += '0'  # V if vector
+            i += '0010'  # CMD
             i += regs[x[2]]
             i += regs[x[1]]
             i += '00000000'
@@ -118,9 +134,17 @@ def traducir(l):
             cM += [i]
         elif(x[0] == 'SUBI'):
             if(int(x[3]) >= 0):
-                i = '111000100100'
+                i = '1110'  # COND
+                i += '00'  # OP
+                i += '1'  # I
+                i += '0'  # V if vector
+                i += '0010'  # CMD
             else:
-                i = '111000101000'
+                i = '1110'  # COND
+                i += '00'  # OP
+                i += '1'  # I
+                i += '0'  # V if vector
+                i += '0100'  # CMD
             i += regs[x[2]]
             i += regs[x[1]]
             i += '0000'
@@ -373,6 +397,8 @@ def traducir(l):
             print(x[0])
             errT = True
 
+        # print(cM)
+
     return cM
 
 
@@ -394,16 +420,17 @@ def initTrans():
     print(c)
 
     b = traducir(c)
-    h = toHex(b)
+    # h = toHex(b)
 
     if not(getErrL() or getErrS() or errT):
         p = open('codeBin.rs', 'w')
-        f = open('codeHex.rs', 'w')
-        for x in range(len(h)):
-            f.write(h[x]+'\n')
-            p.write(b[x]+'\n')
+
+        for x in b:
+            print(x)
+            p.write(x + "\n")
+
         p.close()
-        f.close()
+        # f.close()
         input("Compilacion exitosa")
     else:
         input("Error en compilacion")

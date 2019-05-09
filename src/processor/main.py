@@ -2,16 +2,19 @@ from PIL import Image
 import threading
 import time
 
-clock = 0
+clock = 1
+
 FLAG_PROCESSOR = True
 A = 0
 RD = 0
 WE = 0
-PC = 0
-PCF = 0
-INSTF = []
-INSTD = []
+PC = '00000000000000000000000000000000'
+PCF = '00000000000000000000000000000000'
+INSTF = 'INST'
+INSTD = ''
 ALURESULTE = ''
+RD1 = ''
+RD2 = ''
 
 MEMORY_ARRAY = []
 INSTRUCTION_MEMORY = []
@@ -25,11 +28,13 @@ VECTORS = {"0000": [], "0001": [], "0010": [], "0011": [],
            "1000": [], "1001": [], "1010": [], "1011": [],
            "1100": [], "1101": [], "1110": [], "1111": []}
 
+################################## FUNCTIONS ##################################
+
 
 def toBinary(number, zeros):
     binary = bin(number)
     resBinary = binary[2:]
-    print(resBinary)
+    # print(resBinary)
     if(len(resBinary) < zeros):
         n = zeros - len(resBinary)
         cont = 0
@@ -39,7 +44,7 @@ def toBinary(number, zeros):
             cont += 1
 
         res += resBinary
-        print(res)
+        # print(res)
         return res
     elif(len(resBinary) > zeros):
         n = len(resBinary)
@@ -54,10 +59,10 @@ def toBinary(number, zeros):
 
             cont += 1
 
-        print(res)
+        # print(res)
         return res
     else:
-        print(resBinary)
+        # print(resBinary)
         return resBinary
 
 
@@ -100,6 +105,8 @@ class Clock:
                 clock = 0
             time.sleep(1)
             print("clock: " + str(clock))
+
+################################## OTHER MODULES ##################################
 
 
 class ALU:
@@ -148,23 +155,41 @@ class ALU:
 
 
 class pipeFD:
-    def __init__(self, instF, instD):
-        self.instF = instF
-        self.instD = instD
+    def __init__(self, inst):
+        self.inst = inst
 
     def start(self):
-        global clock
+        global clock, INSTD, INSTF
         while(True):
             if(clock):
-                if(self.instF != -1):
-                    self.instF = INSTF
 
-                print("PIPE FD CLOCK")
+                if(self.inst != -1):
+                    INSTD = self.inst
+
+                print("INSTD IS " + INSTD)
+                print(INSTD)
+
+                # print("PIPE FD CLOCK")
                 time.sleep(1)
             else:
-                self.instD = INSTD
-                print("NOT PIPE FD CLOCK")
+                print("INSTF IS " + INSTF)
+                print(INSTF)
+                self.inst = INSTF
+                # print("NOT PIPE FD CLOCK")
                 time.sleep(1)
+
+    def noClock(self):
+        global clock, INSTD, INSTF
+        if(clock == 1):
+            if(self.inst != -1):
+                INSTD = self.inst
+
+            print("INSTD IS " + INSTD)
+            # print("PIPE FD CLOCK")
+        else:
+            print("INSTF IS " + INSTF)
+            self.inst = INSTF
+            # print("NOT PIPE FD CLOCK")
 
 
 class pipeDE:
@@ -179,6 +204,13 @@ class pipeDE:
                 print("NOT PIPE DE CLOCK")
                 time.sleep(1)
 
+    def noClock(self):
+        global clock
+        if(clock == 1):
+            print("PIPE DE CLOCK")
+        else:
+            print("NOT PIPE DE CLOCK")
+
 
 class pipeEM:
     def start(self):
@@ -191,6 +223,13 @@ class pipeEM:
             else:
                 print("NOT PIPE EM CLOCK")
                 time.sleep(1)
+
+    def noClock(self):
+        global clock
+        if(clock == 1):
+            print("PIPE EM CLOCK")
+        else:
+            print("NOT PIPE EM CLOCK")
 
 
 class pipeMW:
@@ -210,26 +249,59 @@ class pipeMW:
                 print("NOT PIPE MW CLOCK")
                 time.sleep(1)
 
+    def noClock(self):
+        global clock
+        if(clock == 1):
+            print("PIPE MW CLOCK")
+        else:
+            print("NOT PIPE MW CLOCK")
 
+
+class registerPC:
+    def __init__(self, pc):
+        self.pc = pc
+
+    def noClock(self):
+        global clock, PC, PCF
+        if(clock == 1):
+            self.pc = PC
+            PC = toBinary(toDecimal(self.pc) + 1, 32)
+            print("PCF " + PCF)
+            # print("REGISTER PC CLOCK")
+        else:
+
+            PCF = PC
+            print("PCF " + PCF)
+            # print("NOT REGISTER PC CLOCK")
+
+
+################################## FETCH ##################################
 class Fetch:
     def __init__(self, A, RD):
         self.A = A
         self.RD = RD
+        self.registerPC = registerPC(0)
 
     def start(self):
         global clock
         while(True):
             if(clock):
+                self.registerPC.noClock()
                 self.A = PCF
-                self.RD = INSTRUCTION_MEMORY[self.A]
-                print("FETCH CLOCK")
+                print("A " + self.A)
+                self.RD = INSTRUCTION_MEMORY[toDecimal(self.A)]
+                print("INSTRUCTION " + self.RD)
+                # print("FETCH CLOCK")
                 time.sleep(1)
             else:
+                self.registerPC.noClock()
                 INSTF = self.RD
-                print("NOT FETCH CLOCK")
+                print("WRITE INSTF " + INSTF)
+                # print("NOT FETCH CLOCK")
                 time.sleep(1)
 
     def startInstructionMemory(self):
+        global INSTRUCTION_MEMORY
         f = open("../compiler/codeBin.rs", "r")
 
         content = f.read()
@@ -241,14 +313,64 @@ class Fetch:
         print(INSTRUCTION_MEMORY)
 
     def noClock(self):
-        global clock
+        global clock, PCF, INSTF
         if(clock == 1):
-            print("FETCH CLOCK")
+            self.registerPC.noClock()
+            self.A = PCF
+            print("A " + self.A)
+            self.RD = INSTRUCTION_MEMORY[toDecimal(self.A)]
+            print("INSTRUCTION " + self.RD)
+            # print("FETCH CLOCK")
+
         else:
-            print("NOT FETCH CLOCK")
+            self.registerPC.noClock()
+            INSTF = self.RD
+            print("WRITE INSTF " + INSTF)
+
+            # print("NOT FETCH CLOCK")
+
+
+################################## DECODE ##################################
+
+class RegisterFile:
+    def __init__(self, A1 , A2, A3, WE3, WD3):
+        self.A1 = A1
+        self.A2 = A2
+        self.A3 = A3
+        self.WE3 = WE3
+        self.WD3 = WD3
+
+    def noClock(self, a1, a2, a3, we3, wd3):
+        global clock, RD1, RD2
+        if(clock == 1):
+            if(we3):
+                REGISTERS[a3] = [wd3]
+
+            else:
+                print()
+        else:
+            print()
+
+
+
+class VectorsFile:
+    def __init__(self):
+        print()
+        
 
 
 class Decode:
+    def __init__(self, cond, op, i, v, cmd, rn, rd, src):
+        self.cond = cond
+        self.op = op
+        self.i = i
+        self.v = v
+        self.cmd = cmd
+        self.rn = rn
+        self.rd = rd
+        self.src = src
+        self.registerFile = RegisterFile('','','','','')
+        self.imm = ''
 
     def start(self):
         global clock
@@ -262,13 +384,34 @@ class Decode:
                 time.sleep(1)
 
     def noClock(self):
-        global clock
+        global clock, INSTD
         if(clock == 1):
+            if(INSTD != ''):
+                self.cond = INSTF[0:4]
+                self.op = INSTF[4:6]
+                self.i = INSTF[6]
+                self.v = INSTF[7]
+                self.cmd = INSTF[8:12]
+                self.rn = INSTF[12:16]
+                self.rd = INSTF[16:20]
+                self.src = INSTF[20:]
+
+                if(self.op == '00'):
+                    print()
+                elif(self.op == '01'):
+                    print()
+                elif(self.op == '10'):
+                    print()
+
+
+                print(self.cond, self.op, self.i, self.v, self.cmd, self.rn, self.rd, self.src)
+
             print("DECODE CLOCK")
         else:
             print("NOT DECODE CLOCK")
 
 
+################################## EXECUTE ##################################
 class Execute:
 
     def start(self):
@@ -286,6 +429,8 @@ class Execute:
             print("EXECUTE CLOCK")
         else:
             print("NOT EXECUTE CLOCK")
+
+################################## MEMORY ##################################
 
 
 class Memory:
@@ -373,6 +518,8 @@ class Memory:
         else:
             print("NOT MEMORY CLOCK")
 
+################################## WRITE BACK ##################################
+
 
 class WriteBack:
 
@@ -395,6 +542,8 @@ class WriteBack:
             print("NOT WRITEBACK CLOCK")
 
 
+################################## MAIN ##################################
+
 def main():
     global FLAG_PROCESSOR
     global clock
@@ -402,7 +551,30 @@ def main():
     x = input("1. All or 2. You: ")
 
     fetch = Fetch(-1, -1)
+    decode = Decode('','','','','','','','')
+    pFD = pipeFD(-1)
     fetch.startInstructionMemory()
+    print()
+
+    while(FLAG_PROCESSOR):
+        x = input("")
+        print("clock: " + str(clock))
+        if(str(x) == "0"):
+
+            if(clock == 0):
+                fetch.noClock()
+                pFD.noClock()
+                decode.noClock()
+                clock = 1
+            elif(clock == 1):
+                fetch.noClock()
+                pFD.noClock()
+                decode.noClock()
+                clock = 0
+        else:
+            FLAG_PROCESSOR = False
+        print()
+
     # mem = Memory()
     # mem.loadImage()
 
@@ -465,4 +637,4 @@ def main():
 
 
 main()
-# toBinary(200, 12)
+# toBinary(1, 4)
