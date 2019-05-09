@@ -10,11 +10,22 @@ RD = 0
 WE = 0
 PC = '00000000000000000000000000000000'
 PCF = '00000000000000000000000000000000'
-INSTF = 'INST'
+INSTF = ''
 INSTD = ''
 ALURESULTE = ''
+
+
 RD1 = ''
 RD2 = ''
+RDV1 = ''
+RDV1 = ''
+
+IMMEDIATE_NEED = ''
+VECTORS_NEED = ''
+IMMEDIATE = ''
+RD = ''
+
+
 
 MEMORY_ARRAY = []
 INSTRUCTION_MEMORY = []
@@ -193,6 +204,16 @@ class pipeFD:
 
 
 class pipeDE:
+    def __init__(self, immediateNeed, vectorsNeed, rd1, rd2, rdv1, rdv2, imm, rd):
+        self.immediateNeed = immediateNeed
+        self.vectorsNeed = vectorsNeed
+        self.rd1 = rd1
+        self.rd2 = rd2 
+        self.rdv1 = rdv1
+        self.rdv2 = rdv2
+        self.imm = imm
+        self.rd = rd
+
     def start(self):
         global clock
         while(True):
@@ -209,6 +230,7 @@ class pipeDE:
         if(clock == 1):
             print("PIPE DE CLOCK")
         else:
+
             print("NOT PIPE DE CLOCK")
 
 
@@ -341,23 +363,54 @@ class RegisterFile:
         self.WD3 = WD3
 
     def noClock(self, a1, a2, a3, we3, wd3):
-        global clock, RD1, RD2
+        global clock, RD1, RD2, REGISTERS
         if(clock == 1):
-            if(we3):
+            if(we3 == 1):
                 REGISTERS[a3] = [wd3]
+                print(REGISTERS[a3])
 
-            else:
-                print()
+            elif(a1 != ''):
+                self.A1 = a1
+                self.A2 = a2
+                print(self.A1 , self.A2)
+
+
         else:
-            print()
+            RD1 = REGISTERS[self.A1]
+            RD2 = REGISTERS[self.A2]
+            print(RD1, RD2)
 
+            
 
+registerFile = RegisterFile('','','','','')
 
 class VectorsFile:
-    def __init__(self):
-        print()
-        
+    def __init__(self, A1 , A2, A3, WE3, WD3):
+        self.A1 = A1
+        self.A2 = A2
+        self.A3 = A3
+        self.WE3 = WE3
+        self.WD3 = WD3
 
+    def noClock(self, a1, a2, a3, we3, wd3):
+        global clock, RDV1, RDV2, VECTORS
+        if(clock == 1):
+            if(we3 == 1):
+                VECTORS[a3] = [wd3]
+                print(VECTORS[a3])
+
+            else:
+                self.A1 = a1
+                self.A2 = a2
+                print(self.A1 , self.A2)
+
+
+        else:
+            RDV1 = VECTORS[self.A1]
+            RDV2 = VECTORS[self.A2]
+            print(RDV1, RDV2)
+        
+vectorsFile = VectorsFile('', '', '', '', '')
 
 class Decode:
     def __init__(self, cond, op, i, v, cmd, rn, rd, src):
@@ -369,8 +422,12 @@ class Decode:
         self.rn = rn
         self.rd = rd
         self.src = src
-        self.registerFile = RegisterFile('','','','','')
         self.imm = ''
+        self.rd1 = ''
+        self.rd2 = ''
+        self.rdv1 = ''
+        self.rdv2 = ''
+        self.rdpipe = ''
 
     def start(self):
         global clock
@@ -384,31 +441,78 @@ class Decode:
                 time.sleep(1)
 
     def noClock(self):
-        global clock, INSTD
+        global clock, INSTD, RD1, RD2, RDV1, RDV2, RD
         if(clock == 1):
             if(INSTD != ''):
                 self.cond = INSTF[0:4]
                 self.op = INSTF[4:6]
-                self.i = INSTF[6]
-                self.v = INSTF[7]
-                self.cmd = INSTF[8:12]
-                self.rn = INSTF[12:16]
-                self.rd = INSTF[16:20]
-                self.src = INSTF[20:]
-
+                
                 if(self.op == '00'):
-                    print()
+                    self.i = INSTF[6]
+                    self.v = INSTF[7]
+                    self.cmd = INSTF[8:12]
+                    self.rn = INSTF[12:16]
+                    self.rd = INSTF[16:20]
+                    self.src = INSTF[20:]
+
+                    if(self.v == '0'):
+                        if(self.i == '0'):
+                            registerFile.noClock(self.rn, self.src[8:], '', '', '')
+                            self.rdpipe = self.rd
+                        elif(self.i == '1'):
+                            registerFile.noClock(self.rn, '', '', '', '')
+                            self.imm = self.src
+                            self.rdpipe = self.rd
+                            
+                    elif(self.v == '1'):
+                        if(self.i == '0'):
+                            vectorsFile.noClock(self.rn, self.src[8:], '', '', '')
+                            self.rdpipe = self.rd
+                        elif(self.i == '1'):
+                            vectorsFile.noClock(self.rn, '', '', '', '')
+                            self.imm = self.src
+                            self.rdpipe = self.rd
                 elif(self.op == '01'):
                     print()
-                elif(self.op == '10'):
-                    print()
+                
 
 
                 print(self.cond, self.op, self.i, self.v, self.cmd, self.rn, self.rd, self.src)
 
-            print("DECODE CLOCK")
+            # print("DECODE CLOCK")
         else:
-            print("NOT DECODE CLOCK")
+            if(self.op == '00'):
+                if(self.v == '0'):
+                    if(self.i == '0'):
+                        registerFile.noClock('','', '', '', '')
+                        RD = self.rdpipe 
+                        IMMEDIATE_NEED = self.i
+                        VECTORS_NEED = self.v
+                        IMMEDIATE = self.imm 
+                    elif(self.i == '1'):
+                        registerFile.noClock('', '', '', '', '')
+                        IMMEDIATE = self.imm 
+                        RD = self.rdpipe
+                        IMMEDIATE_NEED = self.i
+                        VECTORS_NEED = self.v
+                        
+                elif(self.v == '1'):
+                    if(self.i == '0'):
+                        vectorsFile.noClock('','', '', '', '')
+                        RD = self.rdpipe 
+                        IMMEDIATE_NEED = self.i
+                        VECTORS_NEED = self.v
+                        IMMEDIATE = self.imm 
+                    elif(self.i == '1'):
+                        vectorsFile.noClock('', '', '', '', '')
+                        IMMEDIATE = self.imm 
+                        RD = self.rdpipe
+                        IMMEDIATE_NEED = self.i
+                        VECTORS_NEED = self.v
+            elif(self.op == '01'):
+                print()
+            
+            # print("NOT DECODE CLOCK")
 
 
 ################################## EXECUTE ##################################
