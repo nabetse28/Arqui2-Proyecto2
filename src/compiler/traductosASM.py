@@ -62,13 +62,6 @@ def traducir(l):
     for x in l:
         inst.append(x)
 
-    # for x in inst:
-    #     cL += 1
-    #     if(x[0] == 'TAG'):
-    #         if(x[1] in list(tags.keys())):
-    #             errT = True
-    #         tags[x[1]] = cL
-    #         cL -= 1
     cM = []
     repeat_x = 0
     repeat_y = 0
@@ -84,6 +77,7 @@ def traducir(l):
         repeat_x += 1
 
     # print(repeat)
+    repeat = [['ADDI', 'R0', 'R0', 0]] + repeat
 
     for x in repeat:
         print(x)
@@ -159,7 +153,7 @@ def traducir(l):
                 i += '1'  # U
             else:
                 i += '0'  # U
-            i += '0'  # B
+            i += '0'  # V
             i += '0'  # W
             i += '1'  # L
             i += regs[x[2]]
@@ -168,13 +162,13 @@ def traducir(l):
             cM += [i]
         elif(x[0] == 'LDRRI'):
             i = '111001'
-            i += '0'  # I'
+            i += '1'  # I'
             i += '1'  # P
             if(int(x[3]) >= 0):
                 i += '1'  # U
             else:
                 i += '0'  # U
-            i += '0'  # B
+            i += '0'  # V
             i += '0'  # W
             i += '1'  # L
             i += regs[x[2]]
@@ -186,7 +180,7 @@ def traducir(l):
             i += '0'  # I'
             i += '1'  # P
             i += '1'  # U
-            i += '0'  # B
+            i += '0'  # V
             i += '0'  # W
             i += '1'  # L
             i += regs[x[2]]
@@ -201,7 +195,7 @@ def traducir(l):
                 i += '1'  # U
             else:
                 i += '0'  # U
-            i += '0'  # B
+            i += '0'  # V
             i += '0'  # W
             i += '0'  # L
             i += regs[x[2]]
@@ -210,7 +204,7 @@ def traducir(l):
             cM += [i]
         elif(x[0] == 'STRRI'):
             i = '111001'
-            i += '0'  # I'
+            i += '1'  # I'
             i += '1'  # P
             if(int(x[3]) >= 0):
                 i += '1'  # U
@@ -361,7 +355,7 @@ def traducir(l):
         elif(x[0] == 'LDRVRI'):
             i = '1110'
             i += '01'  # op
-            i += '0'  # I
+            i += '1'  # I
             i += '1'  # P
             if(int(x[3]) >= 0):
                 i += '1'  # U
@@ -371,14 +365,14 @@ def traducir(l):
             i += '0'  # W
             i += '1'  # L
             i += regs[x[2]]
-            i += regs[x[1]]
+            i += vecs[x[1]]
             i += ext(bin(abs(int(x[3])))[2:], 12, '0')
             cM += [i]
         # elif(x[0] == 'LDRVIO'):
         elif(x[0] == 'STRVRI'):
             i = '1110'
             i += '01'  # op
-            i += '0'  # I
+            i += '1'  # I
             i += '1'  # P
             if(int(x[3]) >= 0):
                 i += '1'  # U
@@ -388,7 +382,7 @@ def traducir(l):
             i += '0'  # W
             i += '0'  # L
             i += regs[x[2]]
-            i += regs[x[1]]
+            i += vecs[x[1]]
             i += ext(bin(abs(int(x[3])))[2:], 12, '0')
             cM += [i]
         # elif(x[0] == 'STRVIO'):
@@ -436,7 +430,7 @@ def initTrans():
         input("Error en compilacion")
 
 
-try:
-    initTrans()
-except:
-    input("No se encontro el archivo")
+# try:
+initTrans()
+# except:
+#     input("No se encontro el archivo")

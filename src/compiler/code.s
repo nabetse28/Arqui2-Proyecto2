@@ -1,12 +1,13 @@
 
-ADD R1, R2, #4545
-ADDV V1, V2, V3
-
+;ADD R1, R2, #4545
+;ADDV V1, V2, #5
+STRV V5, [R3, #0]
+STR R9, [R10, #0]
 
 REPEAT #4
 
 
 ADD R1, R2, #6
-ADDV V1, V2, V5
+ADDV V1, V2, #127
 
 REPEAT #7
