@@ -52,6 +52,39 @@ RD1E = ''
 RD2E = ''
 RDV1E = ''
 RDV2E = ''
+READE = ''
+
+ALURESULT_M = ''
+WRITEDATA_M = ''
+WA3_M = ''
+IMMEDIATE_NEED_M = ''
+VECTORS_NEED_M = ''
+OP_M = ''
+CMD_M = ''
+L_M = ''
+RD1_M = ''
+RD2_M = ''
+RDV1_M = ''
+RDV2_M = ''
+RD_M =  ''
+IMMEDIATE_M = ''
+READ_M = ''
+
+ALURESULTM = ''
+WRITEDATAM = ''
+WA3M = ''
+IMMEDIATE_NEEDM = ''
+VECTORS_NEEDM = ''
+OPM = ''
+CMDM = ''
+LM = ''
+RD1M = ''
+RD2M = ''
+RDV1M = ''
+RDV2M = ''
+RDM =  ''
+IMMEDIATEM = ''
+READM = ''
 
 MEMORY_ARRAY = []
 INSTRUCTION_MEMORY = []
@@ -175,62 +208,72 @@ class ALU:
     def __init__(self):
         self.res = ''
     def process8Bits(self, srcAE, srcBE, ALUControlE):
-
+        # print("A ", srcAE)
+        # print("B ", srcBE)
         if(ALUControlE == '0100'):
             A = toDecimal(srcAE)
             B = toDecimal(srcBE)
             temp = A + B
             bi = toBinary(temp, 32)
             self.res = bi[24:]
+            # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '0010'):
             A = toDecimal(srcAE)
             B = toDecimal(srcBE)
             temp = A - B
             bi = toBinary(temp, 32)
             self.res = bi[24:]
+            # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '0001'):
             A = toDecimal(srcAE)
             B = toDecimal(srcBE)
             temp = A ^ B
             bi = toBinary(temp, 32)
             self.res = bi[24:]
+            # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '1000'):
             self.res = circularMoveRight(srcAE, toDecimal(srcBE))
+            # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '1001'):
             self.res = circularMoveLeft(srcAE, toDecimal(srcBE))
+            # print("PROCESS 8 BITS ", self.res)
 
     def processRegisterImm(self, srcAE, srcBE, ALUControlE):
         if(ALUControlE == '0100'):
-            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            Abin = srcAE[0][0] + srcAE[1][0] + srcAE[2][0] + srcAE[3][0]
             A = toDecimal(Abin)
             B = toDecimal(srcBE)
             temp = A + B
             bi = toBinary(temp, 32)
             self.res = [[bi[0:8]] , [bi[8:16]] , [bi[16:24]] , [bi[24:]]]
+            # print("REGIMM ", self.res)
         elif(ALUControlE == '0010'):
-            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
+            Abin = srcAE[0][0] + srcAE[1][0] + srcAE[2][0] + srcAE[3][0]
             A = toDecimal(Abin)
             B = toDecimal(srcBE)
             temp = A - B
             bi = toBinary(temp, 32)
             self.res = [[bi[0:8]] , [bi[8:16]] , [bi[16:24]] , [bi[24:]]]
+            # print("REGIMM ", self.res)
     def processRegisterRegister(self, srcAE, srcBE, ALUControlE):
         if(ALUControlE == '0100'):
-            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
-            Bbin = srcBE[0] + srcBE[1] + srcBE[2] + srcBE[3]
+            Abin = srcAE[0][0] + srcAE[1][0] + srcAE[2][0] + srcAE[3][0]
+            Bbin = srcBE[0][0] + srcBE[1][0] + srcBE[2][0] + srcBE[3][0]
             A = toDecimal(Abin)
             B = toDecimal(Bbin)
             temp = A + B
             bi = toBinary(temp, 32)
             self.res = [[bi[0:8]] , [bi[8:16]] , [bi[16:24]] , [bi[24:]]]
+            # print("REGREG ", self.res)
         elif(ALUControlE == '0010'):
-            Abin = srcAE[0] + srcAE[1] + srcAE[2] + srcAE[3]
-            Bbin = srcBE[0] + srcBE[1] + srcBE[2] + srcBE[3]
+            Abin = srcAE[0][0] + srcAE[1][0] + srcAE[2][0] + srcAE[3][0]
+            Bbin = srcBE[0][0] + srcBE[1][0] + srcBE[2][0] + srcBE[3][0]
             A = toDecimal(Abin)
             B = toDecimal(Bbin)
             temp = A - B
             bi = toBinary(temp, 32)
             self.res = [[bi[0:8]] , [bi[8:16]] , [bi[16:24]] , [bi[24:]]]
+            # print("REGIMM ", self.res)
 
 
 
@@ -316,7 +359,7 @@ class pipeDE:
                 RDV2_E = self.rdv2
                 RD_E=  self.rd
                 IMMEDIATE_E = self.imm
-
+            # print("LOAD DECODE", L_E)
             print("PIPE DE ", IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E)
         else:
             if(CMD != ''):
@@ -331,11 +374,32 @@ class pipeDE:
                 self.rdv2 = RDV2
                 self.rd = RD
                 self.imm = IMMEDIATE
-
+            # print("LOAD DECODE", self.l)
             print("NOT PIPE DE ", self.immediateNeed, self.vectorsNeed, self.op, self.cmd, self.l, self.rd1, self.rd2, self.rdv1, self.rdv2, self.rd, self.imm)
+            # print("RD1 ", self.rd1)
+            # print("RD2 ", self.rd2)
+            # print("RDV1 ", self.rdv1)
+            # print("RDV2 ", self.rdv2)
+            # print("RD ", self.rd)
+
 
 
 class pipeEM:
+    def __init__(self):
+        self.aluresultm = ''
+        self.writedatam = ''
+        self.wa3m = ''
+        self.opm = ''
+        self.cmdm = ''
+        self.lm = ''
+        self.immediateNeedM = ''
+        self.vectorsNeedM = ''
+        self.rd1m = ''
+        self.rd2m = ''
+        self.rdv1m = ''
+        self.rdv2m = ''
+        self.readm = ''
+
     def start(self):
         global clock
         while(True):
@@ -348,11 +412,36 @@ class pipeEM:
                 time.sleep(1)
 
     def noClock(self):
-        global clock
+        global clock, ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E, READE
+        global ALURESULT_M, WRITEDATA_M, WA3_M, OP_M, CMD_M, L_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, IMMEDIATE_M, READ_M
         if(clock == 1):
-            print("PIPE EM CLOCK")
+            if(CMDE != ''):
+                ALURESULT_M = self.aluresultm
+                WRITEDATA_M = self.writedatam
+                WA3_M = self.wa3m
+                OP_M = self.opm
+                CMD_M = self.cmdm
+                L_M = self.lm
+                IMMEDIATE_NEED_M = self.immediateNeedM
+                VECTORS_NEED_M = self.vectorsNeedM
+                READ_M = self.readm
+            # print("LOAD REQUIRED ", L_M)
+            print("LOAD REQUIRED ", IMMEDIATE_NEED_M)
+            print("PIPE EM ", ALURESULT_M, WRITEDATA_M, WA3_M, OP_M, CMD_M, L_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, READ_M)
         else:
-            print("NOT PIPE EM CLOCK")
+            if(CMDE != ''):
+                self.aluresultm = ALURESULTE
+                self.writedatam = WRITEDATAE
+                self.wa3m = WA3E
+                self.opm = OPE
+                self.cmdm = CMDE
+                self.lm = LE
+                self.immediateNeedM = IMMEDIATE_NEEDE
+                self.vectorsNeedM = VECTORS_NEEDE
+                self.readm = READE
+            # print("LOAD REQUIRED ", self.lm)
+            print("LOAD REQUIRED ", self.immediateNeedM)
+            print("NOT PIPE EM", self.aluresultm, self.writedatam, self.wa3m, self.opm, self.cmdm, self.lm, self.immediateNeedM, self.vectorsNeedM, READE)
 
 
 class pipeMW:
@@ -436,11 +525,11 @@ class Fetch:
 
         print(INSTRUCTION_MEMORY)
 
-        self.lenInstructionMemory = len(INSTRUCTION_MEMORY)
-        INSTRUCTION_MEMORY = self.lenInstructionMemory
+        # self.lenInstructionMemory = len(INSTRUCTION_MEMORY)
+        # INSTRUCTION_MEMORY = self.lenInstructionMemory
 
     def noClock(self):
-        global clock, PCF, INSTF
+        global clock, PCF, INSTF, INSTRUCTION_MEMORY
         if(clock == 1):
             self.registerPC.noClock()
             self.A = PCF
@@ -743,7 +832,7 @@ class Execute:
     def noClock(self):
         global clock, IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E
         #global IMMEDIATE_NEED_M, IMMEDIATE_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M
-        global ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E
+        global ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E, READE
         if(clock == 1):
             if(CMD_E != ''):
                 self.immediateNeedE = IMMEDIATE_NEED_E
@@ -763,26 +852,28 @@ class Execute:
                         if(self.vectorsNeedE == '0'):
                             self.alu1.processRegisterRegister(self.rd1E, self.rd2E, self.cmdE)
                         elif(self.vectorsNeedE == '1'):
-                            self.alu1.process8Bits(self.rdv1E[0], self.rdv2E[0], self.cmdE)
-                            self.alu2.process8Bits(self.rdv1E[1], self.rdv2E[1], self.cmdE)
-                            self.alu3.process8Bits(self.rdv1E[2], self.rdv2E[2], self.cmdE)
-                            self.alu4.process8Bits(self.rdv1E[3], self.rdv2E[3], self.cmdE)
-                            self.alu5.process8Bits(self.rdv1E[4], self.rdv2E[4], self.cmdE)
-                            self.alu6.process8Bits(self.rdv1E[5], self.rdv2E[5], self.cmdE)
-                            self.alu7.process8Bits(self.rdv1E[6], self.rdv2E[6], self.cmdE)
-                            self.alu8.process8Bits(self.rdv1E[7], self.rdv2E[7], self.cmdE)
+                            self.alu1.process8Bits(self.rdv1E[0][0], self.rdv2E[0][0], self.cmdE)
+                            self.alu2.process8Bits(self.rdv1E[1][0], self.rdv2E[1][0], self.cmdE)
+                            self.alu3.process8Bits(self.rdv1E[2][0], self.rdv2E[2][0], self.cmdE)
+                            self.alu4.process8Bits(self.rdv1E[3][0], self.rdv2E[3][0], self.cmdE)
+                            self.alu5.process8Bits(self.rdv1E[4][0], self.rdv2E[4][0], self.cmdE)
+                            self.alu6.process8Bits(self.rdv1E[5][0], self.rdv2E[5][0], self.cmdE)
+                            self.alu7.process8Bits(self.rdv1E[6][0], self.rdv2E[6][0], self.cmdE)
+                            self.alu8.process8Bits(self.rdv1E[7][0], self.rdv2E[7][0], self.cmdE)
                     elif(self.immediateNeedE == '1'):
                         if(self.vectorsNeedE == '0'):
+                            print("EXECUTION IMMEDIATE", self.immE)
                             self.alu1.processRegisterImm(self.rd1E, self.immE , self.cmdE)
                         elif(self.vectorsNeedE == '1'):
-                            self.alu1.process8Bits(self.rdv1E[0], self.immE[4:], self.cmdE)
-                            self.alu2.process8Bits(self.rdv1E[1], self.immE[4:], self.cmdE)
-                            self.alu3.process8Bits(self.rdv1E[2], self.immE[4:], self.cmdE)
-                            self.alu4.process8Bits(self.rdv1E[3], self.immE[4:], self.cmdE)
-                            self.alu5.process8Bits(self.rdv1E[4], self.immE[4:], self.cmdE)
-                            self.alu6.process8Bits(self.rdv1E[5], self.immE[4:], self.cmdE)
-                            self.alu7.process8Bits(self.rdv1E[6], self.immE[4:], self.cmdE)
-                            self.alu8.process8Bits(self.rdv1E[7], self.immE[4:], self.cmdE)
+                            print("EXECUTION IMMEDIATE", self.immE)
+                            self.alu1.process8Bits(self.rdv1E[0][0], self.immE[4:], self.cmdE)
+                            self.alu2.process8Bits(self.rdv1E[1][0], self.immE[4:], self.cmdE)
+                            self.alu3.process8Bits(self.rdv1E[2][0], self.immE[4:], self.cmdE)
+                            self.alu4.process8Bits(self.rdv1E[3][0], self.immE[4:], self.cmdE)
+                            self.alu5.process8Bits(self.rdv1E[4][0], self.immE[4:], self.cmdE)
+                            self.alu6.process8Bits(self.rdv1E[5][0], self.immE[4:], self.cmdE)
+                            self.alu7.process8Bits(self.rdv1E[6][0], self.immE[4:], self.cmdE)
+                            self.alu8.process8Bits(self.rdv1E[7][0], self.immE[4:], self.cmdE)
                 
                     
 
@@ -840,17 +931,34 @@ class Execute:
                         IMMEDIATE_NEEDE = self.immediateNeedE
                         VECTORS_NEEDE = self.vectorsNeedE
                     elif(self.lE == '1'):# LDR
+                        ALURESULTE = ''
                         READE = self.rd2E
                         WA3E = self.rdE
+                        OPE = self.opE
+                        CMDE = self.cmdE
+                        LE = self.lE
+                        IMMEDIATE_NEEDE = self.immediateNeedE
+                        VECTORS_NEEDE = self.vectorsNeedE
                 elif(self.vectorsNeedE == '1'):
                     if(self.lE == '0'):# STRV
                         WRITEDATAE = self.rd2E
                         ALURESULTE = self.rdv1E
+                        OPE = self.opE
+                        CMDE = self.cmdE
+                        LE = self.lE
+                        IMMEDIATE_NEEDE = self.immediateNeedE
+                        VECTORS_NEEDE = self.vectorsNeedE
                     elif(self.lE == '1'):# LDRV
+                        ALURESULTE = ''
                         READE = self.rd2E
                         WA3E = self.rdE
+                        LE = self.lE
+                        OPE = self.opE
+                        CMDE = self.cmdE
+                        IMMEDIATE_NEEDE = self.immediateNeedE
+                        VECTORS_NEEDE = self.vectorsNeedE
 
-            print("EXECUTE ", ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE)
+            print("NO EXECUTE ", ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, READE)
 
             # print("NOT EXECUTE CLOCK")
 
@@ -859,17 +967,109 @@ class Execute:
 
 class Memory:
 
-    # def __init__(self, A, RD, WE):
+    def __init__(self):
+        self.am = ''
+        self.readm = ''
+        self.wa3m = ''
+        self.aluresultm = ''
+        self.writedatam = ''
+        self.immediateNeedm = ''
+        self.vectorsNeedm = ''
+        self.opm = ''
+        self.cmdm = ''
+        self.lm = ''
 
-    #     self.A = A
-    #     self.RD = RD
-    #     self.WE = WE
+
+    def start(self):
+        global clock
+        while(True):
+            if(clock):
+                print("MEMORY CLOCK")
+                time.sleep(1)
+            else:
+                print("NOT MEMORY CLOCK")
+                time.sleep(1)
+
+    def noClock(self):
+        global clock, ALURESULT_M, WRITEDATA_M, WA3_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M, READ_M
+        global ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
+        global INSTRUCTION_MEMORY
+        if(clock == 1):
+            if(CMD_M != ''):
+                self.am = ALURESULT_M
+                self.readm = READ_M
+                self.wa3m = WA3_M
+                self.writedatam = WRITEDATA_M
+                self.immediateNeedm = IMMEDIATE_NEED_M
+                self.vectorsNeedm = VECTORS_NEED_M
+                self.opm = OP_M
+                self.cmdm = CMD_M
+                self.lm = L_M
+
+                # if(self.opm == '00'):
+                #     if(self.immediateNeedm == '0'):
+                #         if(self.vectorsNeedm == '0'):
+                            
+                #         elif(self.vectorsNeedm == '1'):
+
+                #     elif(self.immediateNeedm == '1'):
+                #         if(self.vectorsNeedm == '0'):
+                #         elif(self.vectorsNeedm == '1'):
+                # elif(self.opm == '01'):
+                #     if(self.vectorsNeedm == '0'):
+                #         if(self.lm == '0'):
+
+                #         elif(self.lm == '1'):
+
+                #     elif(self.vectorsNeedm == '1'):
+                #         if(self.lm == '0'):
+                #         elif(self.lm == '1'):
+
+
+
+
+
+            # print("MEMORY ", self.am, self.readm, self.wa3m, self.writedatam, self.immediateNeedm, self.vectorsNeedm, self.opm, self.cmdm, self.lm)
+            print("############ MEMORY ############")
+            print("ALURESULTM ", self.am)
+            print("WA3M ", self.wa3m)
+            print("WRITEDATAM ", self.writedatam)
+            print("IMMEDIATENEEDM ", self.immediateNeedm)
+            print("VECTORSNEEDM ", self.vectorsNeedm)
+            print("OPM ", self.opm)
+            print("CMDM ", self.cmdm)
+            print("LM ", self.lm)
+
+        else:
+            if(self.opm == '00'):
+                if(self.immediateNeedm == '0'):
+                    if(self.vectorsNeedm == '0'):
+                        ALURESULTM = self.aluresultm
+                        WA3M = self.wa3m
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        
+                    elif(self.vectorsNeedm == '1'):
+
+                elif(self.immediateNeedm == '1'):
+                    if(self.vectorsNeedm == '0'):
+                    elif(self.vectorsNeedm == '1'):
+            elif(self.opm == '01'):
+                if(self.vectorsNeedm == '0'):
+                    if(self.lm == '0'):
+
+                    elif(self.lm == '1'):
+
+                elif(self.vectorsNeedm == '1'):
+                    if(self.lm == '0'):
+                    elif(self.lm == '1'):
+            print("NOT MEMORY CLOCK")
 
     def loadImage(self):
         # Can be many different formats.
         im = Image.open('../images/lenna_saturacion.png', 'r')
         pix_val = list(im.getdata())
-        print(pix_val[16383])
+        # print(pix_val[16383])
         size = im.size[0]
         size_2 = size * size
         print(size)
@@ -925,22 +1125,7 @@ class Memory:
         # print(MEMORY_ARRAY)
         # print(len(MEMORY_ARRAY))
 
-    def start(self):
-        global clock
-        while(True):
-            if(clock):
-                print("MEMORY CLOCK")
-                time.sleep(1)
-            else:
-                print("NOT MEMORY CLOCK")
-                time.sleep(1)
-
-    def noClock(self):
-        global clock
-        if(clock == 1):
-            print("MEMORY CLOCK")
-        else:
-            print("NOT MEMORY CLOCK")
+    
 
 ################################## WRITE BACK ##################################
 
@@ -977,8 +1162,10 @@ def main():
     fetch = Fetch(-1, -1)
     decode = Decode('','','','','','','','')
     execute = Execute()
+    memory = Memory()
     pDE = pipeDE('', '', '', '', '', '', '', '', '', '', '')
     pFD = pipeFD(-1)
+    pEM = pipeEM()
     fetch.startInstructionMemory()
     print()
 
@@ -993,6 +1180,8 @@ def main():
                 decode.noClock()
                 pDE.noClock()
                 execute.noClock()
+                pEM.noClock()
+                memory.noClock()
                 clock = 1
             elif(clock == 1):
                 fetch.noClock()
@@ -1000,6 +1189,8 @@ def main():
                 decode.noClock()
                 pDE.noClock()
                 execute.noClock()
+                pEM.noClock()
+                memory.noClock()
                 clock = 0
         else:
             FLAG_PROCESSOR = False

@@ -258,7 +258,8 @@ def traducir(l):
                 i += '0010'  # CMD
             i += vecs[x[2]]  # Rn
             i += vecs[x[1]]  # Rd
-            i += ext(bin(0)[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         elif(x[0] == 'SUBV'):
             i = '1110'  # COND
@@ -286,7 +287,8 @@ def traducir(l):
                 i += '0100'  # CMD
             i += vecs[x[2]]  # Rn
             i += vecs[x[1]]  # Rd
-            i += ext(bin(0)[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         elif(x[0] == 'CIRRV'):
             i = '1110'  # COND
@@ -307,7 +309,8 @@ def traducir(l):
             i += '1000'  # CMD
             i += vecs[x[2]]  # Rn
             i += vecs[x[1]]  # Rd
-            i += ext(bin(abs(int(x[3])))[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         elif(x[0] == 'CIRLV'):
             i = '1110'  # COND
@@ -328,7 +331,8 @@ def traducir(l):
             i += '1001'  # CMD
             i += vecs[x[2]]  # Rn
             i += vecs[x[1]]  # Rd
-            i += ext(bin(abs(int(x[3])))[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         elif(x[0] == 'XORV'):
             i = '1110'  # COND
@@ -349,7 +353,8 @@ def traducir(l):
             i += '0001'  # CMD
             i += vecs[x[2]]  # Rn
             i += vecs[x[1]]  # Rd
-            i += ext(bin(abs(int(x[3])))[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         # elif(x[0] == 'ALGV'):
         elif(x[0] == 'LDRVRI'):
@@ -366,7 +371,8 @@ def traducir(l):
             i += '1'  # L
             i += regs[x[2]]
             i += vecs[x[1]]
-            i += ext(bin(abs(int(x[3])))[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         # elif(x[0] == 'LDRVIO'):
         elif(x[0] == 'STRVRI'):
@@ -383,7 +389,8 @@ def traducir(l):
             i += '0'  # L
             i += regs[x[2]]
             i += vecs[x[1]]
-            i += ext(bin(abs(int(x[3])))[2:], 12, '0')
+            i += '0000'
+            i += ext(bin(abs(int(x[3])))[2:], 8, '0')
             cM += [i]
         # elif(x[0] == 'STRVIO'):
 
