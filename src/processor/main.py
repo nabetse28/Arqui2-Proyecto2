@@ -1558,7 +1558,7 @@ class Memory:
                             OPM = self.opm
                             CMDM = self.cmdm
                         elif(self.lm == '1'): # LDR
-                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            data = toDecimal(self.aluresultm[0][0] + self.aluresultm[1][0] + self.aluresultm[2][0] + self.aluresultm[3][0])
                             ALURESULTM = MEMORY_ARRAY[data]
                             WRITEDATAM = ''
                             WA3M = self.wa3m
@@ -1581,7 +1581,7 @@ class Memory:
                             OPM = self.opm
                             CMDM = self.cmdm 
                         elif(self.lm == '1'): # LDRV
-                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            data = toDecimal(self.aluresultm[0][0] + self.aluresultm[1][0] + self.aluresultm[2][0] + self.aluresultm[3][0])
                             aluTemp = MEMORY_ARRAY[data] + MEMORY_ARRAY[data + 1]
                             ALURESULTM = aluTemp
                             WRITEDATAM = ''
@@ -1672,7 +1672,6 @@ class Memory:
             elif(self.opm == '01'):
                 if(self.vectorsNeedm == '0'):
                     if(self.lm == '0'): # STR
-                        print("STR WRITEDATA", self.writedatam)
                         data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
                         print("DATA", data)
                         print("INSTRUCTION MEMORY ", MEMORY_ARRAY[data])
@@ -1687,7 +1686,10 @@ class Memory:
                         OPM = self.opm
                         CMDM = self.cmdm
                     elif(self.lm == '1'): # LDR
-                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        print("WRITEDATA IN MEMORY ", self.writedatam)
+                        print("LDRV WRITEDATA", self.wa3m)
+                        print("LDRV ALURESULT ", self.aluresultm)
+                        data = toDecimal(self.aluresultm[0][0] + self.aluresultm[1][0] + self.aluresultm[2][0] + self.aluresultm[3][0])
                         ALURESULTM = MEMORY_ARRAY[data]
                         WRITEDATAM = ''
                         WA3M = self.wa3m
@@ -1710,8 +1712,15 @@ class Memory:
                         OPM = self.opm
                         CMDM = self.cmdm 
                     elif(self.lm == '1'): # LDRV
-                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        print("WRITEDATA IN MEMORY ", self.writedatam)
+                        print("LDRV WRITEDATA", self.wa3m)
+                        print("LDRV ALURESULT ", self.aluresultm)
+                        data = toDecimal(self.aluresultm[0][0] + self.aluresultm[1][0] + self.aluresultm[2][0] + self.aluresultm[3][0])
                         aluTemp = MEMORY_ARRAY[data] + MEMORY_ARRAY[data + 1]
+                        print("MEMORY ARRAY 0", MEMORY_ARRAY[data])
+                        print("MEMORY ARRAY 0", MEMORY_ARRAY[data + 1])
+                        print("MEMORY ARRAY 0", MEMORY_ARRAY[data + 2])
+                        print("MEMORY ARRAY 0", MEMORY_ARRAY[data + 3])
                         ALURESULTM = aluTemp
                         WRITEDATAM = ''
                         WA3M = self.wa3m
@@ -1899,6 +1908,12 @@ class WriteBack:
             print()
             
             print("############ NO WRITEBACK ############")
+            print(MEMORY_ARRAY[0])
+            print(MEMORY_ARRAY[1])
+            print(MEMORY_ARRAY[2])
+            print(MEMORY_ARRAY[3])
+            print(MEMORY_ARRAY[4])
+            print(MEMORY_ARRAY[5])
             # print(MEMORY_ARRAY[4094])
             # print(MEMORY_ARRAY[4098])
             # print("NOT WRITEBACK CLOCK")
@@ -2057,6 +2072,10 @@ def main():
                     memory.noClock()
                     pMW.noClock()
                     wb.noClock()
+                    print(REGISTERS)
+                    print()
+                    print(VECTORS)
+                    print()
                     clock = 0
             else:
                 FLAG_PROCESSOR = False
