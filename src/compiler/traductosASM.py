@@ -71,10 +71,10 @@ def traducir(l):
             for x in range(0, x[1]):
                 for y in range(repeat_y, repeat_x):
                     repeat.append(inst[y])
-                    repeat.append([['ADDI', 'R0', 'R0', 0]])
-                    repeat.append([['ADDI', 'R0', 'R0', 0]])
-                    repeat.append([['ADDI', 'R0', 'R0', 0]])
-                    repeat.append([['ADDI', 'R0', 'R0', 0]])
+                    repeat.append(['ADDI', 'R0', 'R0', 0])
+                    repeat.append(['ADDI', 'R0', 'R0', 0])
+                    repeat.append(['ADDI', 'R0', 'R0', 0])
+                    repeat.append(['ADDI', 'R0', 'R0', 0])
 
             repeat_y = repeat_x + 1
 
@@ -438,6 +438,7 @@ def initTrans():
         # f.close()
         input("Compilacion exitosa")
     else:
+        print("DE UNA VEZ")
         input("Error en compilacion")
 
 
