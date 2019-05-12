@@ -86,6 +86,14 @@ RDM =  ''
 IMMEDIATEM = ''
 READM = ''
 
+ALURESULT_W = ''
+WA3_W = ''
+IMMEDIATE_NEED_W = ''
+VECTORS_NEED_W = ''
+OP_W = ''
+CMD_W = ''
+L_W = ''
+
 MEMORY_ARRAY = []
 INSTRUCTION_MEMORY = []
 INSTRUCTION_MEMORY_SIZE = 0
@@ -98,7 +106,7 @@ REGISTERS = {"0000": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "0110": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
              "0111": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "1000": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
-             "1001": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
+             "1001": [['11111111'], ['00000000'], ['00000000'], ['00000000']], 
              "1010": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
              "1011": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "1100": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
@@ -306,7 +314,8 @@ class pipeFD:
         if(clock == 1):
             if(self.inst != -1):
                 INSTD = self.inst
-
+            
+            
             print("INSTD IS " + INSTD)
             # print("PIPE FD CLOCK")
         else:
@@ -426,7 +435,17 @@ class pipeEM:
                 VECTORS_NEED_M = self.vectorsNeedM
                 READ_M = self.readm
             # print("LOAD REQUIRED ", L_M)
-            print("LOAD REQUIRED ", IMMEDIATE_NEED_M)
+            # print("LOAD REQUIRED ", IMMEDIATE_NEED_M)
+            print()
+            print("############ PIPE EM ############")
+            print("ALURESULT_M ", ALURESULT_M)
+            print("WRITEDATA_M ", WRITEDATA_M)
+            print("WA3_M ", WA3_M)
+            print("IMMEDIATENEEDM ", IMMEDIATE_NEED_M)
+            print("VECTORSNEED_M ", VECTORS_NEED_M)
+            print("OP_M ", OP_M)
+            print("CMD_M ", CMD_M)
+            print("L_M ", self.lm)
             print("PIPE EM ", ALURESULT_M, WRITEDATA_M, WA3_M, OP_M, CMD_M, L_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, READ_M)
         else:
             if(CMDE != ''):
@@ -440,15 +459,31 @@ class pipeEM:
                 self.vectorsNeedM = VECTORS_NEEDE
                 self.readm = READE
             # print("LOAD REQUIRED ", self.lm)
-            print("LOAD REQUIRED ", self.immediateNeedM)
-            print("NOT PIPE EM", self.aluresultm, self.writedatam, self.wa3m, self.opm, self.cmdm, self.lm, self.immediateNeedM, self.vectorsNeedM, READE)
+            # print("LOAD REQUIRED ", self.immediateNeedM)
+            print()
+            print("############ NO PIPE EM ############")
+            print("ALURESULTM ", self.aluresultm)
+            print("WRITEDATAM ", self.writedatam)
+            print("WA3M ", self.wa3m)
+            print("IMMEDIATENEEDM ", self.immediateNeedM)
+            print("VECTORSNEEDM ", self.vectorsNeedM)
+            print("OPM ", self.opm)
+            print("CMDM ", self.cmdm)
+            print("LM ", self.lm)
+            # print("NOT PIPE EM", self.aluresultm, self.writedatam, self.wa3m, self.opm, self.cmdm, self.lm, self.immediateNeedM, self.vectorsNeedM)
 
 
 class pipeMW:
-    def __init__(self, pcSrcM, regWriteM, memToRegM):
-        self.pcSrcM = pcSrcM
-        self.regWriteM = regWriteM
-        self.memToRegM = memToRegM
+    def __init__(self):
+        self.aluresultw = ''
+        self.wa3w = ''
+        self.writedataw = ''
+        self.immediateNeedw = ''
+        self.vectorsNeedw = ''
+        self.opw = ''
+        self.cmdw = ''
+        self.lw = ''
+
 
     def start(self):
         global clock
@@ -462,11 +497,47 @@ class pipeMW:
                 time.sleep(1)
 
     def noClock(self):
-        global clock
+        global clock, ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
+        global ALURESULT_W, WA3_W, IMMEDIATE_NEED_W, VECTORS_NEED_W, OP_W, CMD_W, L_W
         if(clock == 1):
-            print("PIPE MW CLOCK")
+            if(self.cmdw != ''):
+                ALURESULT_W = self.aluresultw
+                WA3_W = self.wa3w
+                IMMEDIATE_NEED_W = self.immediateNeedw
+                VECTORS_NEED_W = self.vectorsNeedw
+                OP_W = self.opw
+                CMD_W = self.cmdw
+                L_W = self.lw
+            print()
+            print("############ PIPE MW ############")
+            print("ALURESULT_W ", ALURESULT_W)
+            print("WA3_W ", WA3_W)
+            print("IMMEDIATENEED_W ", IMMEDIATE_NEED_W)
+            print("VECTORSNEED_W ", VECTORS_NEED_W)
+            print("OP_W ", OP_W)
+            print("CMD_W ", CMD_W)
+            print("L_W ", L_W)
+            # print("PIPE MW CLOCK")
         else:
-            print("NOT PIPE MW CLOCK")
+            if(CMDM != ''):
+                self.aluresultw = ALURESULTM
+                self.wa3w = WA3M
+                self.immediateNeedw = IMMEDIATE_NEEDM
+                self.vectorsNeedw = VECTORS_NEEDM
+                self.opw = OPM
+                self.cmdw = CMDM
+                self.lw = LM
+
+            print()
+            print("############ NO PIPE MW ############")
+            print("ALURESULTW ", self.aluresultw)
+            print("WA3W ", self.wa3w)
+            print("IMMEDIATENEEDW ", self.immediateNeedw)
+            print("VECTORSNEEDW ", self.vectorsNeedw)
+            print("OPW ", self.opw)
+            print("CMDW ", self.cmdw)
+            print("LW ", self.lw)
+            # print("NOT PIPE MW CLOCK")
 
 
 class registerPC:
@@ -478,11 +549,15 @@ class registerPC:
         if(clock == 1):
             self.pc = PC
             PC = toBinary(toDecimal(self.pc) + 1, 32)
+            print()
+            print("############ REGISTER PC ############")
             print("PCF " + PCF)
             # print("REGISTER PC CLOCK")
         else:
 
             PCF = PC
+            print()
+            print("############ NO REGISTER PC ############")
             print("PCF " + PCF)
             # print("NOT REGISTER PC CLOCK")
 
@@ -558,28 +633,33 @@ class RegisterFile:
 
     def noClock(self, a1, a2, a3, we3, wd3):
         global clock, RD1, RD2, REGISTERS
+
+        
         if(clock == 1):
-            if(we3 == 1):
-                REGISTERS[a3] = [wd3]
-                print(REGISTERS[a3])
-            else:
-                self.A1 = a1
-                self.A2 = a2
-                print("A1 A2 ", self.A1 , self.A2)
+            
+            self.A1 = a1
+            self.A2 = a2
+            # print("A1 A2 ", self.A1 , self.A2)
 
 
         else:
-            if(self.A2 == ''):
-                RD1 = REGISTERS[self.A1]
-                RD2 = ''
-            elif(self.A1 == ''):
-                RD1 = ''
-                RD2 = REGISTERS[self.A2]
+            print("WE3 ", we3)
+            if(we3 == 1):
+                print("MAMAMAMAMAMAMAMAMAMAMAMAMMAMAMAMAMAMAMAMAAMMAMAMAMAMA")
+                REGISTERS[a3] = wd3
+                print("RESULT OF THE REGISTER ", REGISTERS[a3])
             else:
-                RD1 = REGISTERS[self.A1]
-                RD2 = REGISTERS[self.A2]
+                if(self.A2 == ''):
+                    RD1 = REGISTERS[self.A1]
+                    RD2 = ''
+                elif(self.A1 == ''):
+                    RD1 = ''
+                    RD2 = REGISTERS[self.A2]
+                else:
+                    RD1 = REGISTERS[self.A1]
+                    RD2 = REGISTERS[self.A2]
             
-            print("RD1 RD2 ",RD1, RD2)
+            # print("RD1 RD2 ",RD1, RD2)
 
             
 
@@ -597,27 +677,25 @@ class VectorsFile:
     def noClock(self, a1, a2, a3, we3, wd3):
         global clock, RDV1, RDV2, VECTORS
         if(clock == 1):
-            if(we3 == 1):
-                VECTORS[a3] = [wd3]
-                print(VECTORS[a3])
-
-            else:
-                self.A1 = a1
-                self.A2 = a2
-                print("AV1 AV2 ", self.A1 , self.A2)
-
+            self.A1 = a1
+            self.A2 = a2
+            # print("AV1 AV2 ", self.A1 , self.A2)
 
         else:
-            if(self.A2 == ''):
-                RDV1 = VECTORS[self.A1]
-                RDV2 = ''
-            elif(self.A1 == ''):
-                RDV1 = ''
-                RDV2 = VECTORS[self.A2]
+            if(we3 == 1):
+                VECTORS[a3] = wd3
+                print("RESULT OF THE VECTOR ", VECTORS[a3])
             else:
-                RDV1 = VECTORS[self.A1]
-                RDV2 = VECTORS[self.A2]
-            print("RDV1 RDV2 ", RDV1, RDV2)
+                if(self.A2 == ''):
+                    RDV1 = VECTORS[self.A1]
+                    RDV2 = ''
+                elif(self.A1 == ''):
+                    RDV1 = ''
+                    RDV2 = VECTORS[self.A2]
+                else:
+                    RDV1 = VECTORS[self.A1]
+                    RDV2 = VECTORS[self.A2]
+            # print("RDV1 RDV2 ", RDV1, RDV2)
         
 vectorsFile = VectorsFile('', '', '', '', '')
 
@@ -713,14 +791,16 @@ class Decode:
                             registerFile.noClock('', self.rn, '','','')
                             self.rdpipe = self.rd
                             self.imm = self.src
-
-
-
-                
-
-
-                print(self.cond, self.op, self.i, self.v, self.cmd, self.rn, self.rd, self.src)
-
+                print()
+                print("############ DECODE ############")
+                print("OP ", self.op)
+                print("CMD ", self.cmd)
+                print("I ", self.i)
+                print("V ", self.v)
+                print("Rn ", self.rn)
+                print("Rd ", self.rd)
+                print("Src ", self.src)
+                # print(self.cond, self.op, self.i, self.v, self.cmd, self.rn, self.rd, self.src)
             # print("DECODE CLOCK")
         else:
             if(self.op == '00'):
@@ -792,7 +872,21 @@ class Decode:
                         VECTORS_NEED = self.v
                         OP = self.op
                         L = self.l
-            print(IMMEDIATE_NEED, VECTORS_NEED, OP, CMD, L, RD1, RD2, RDV1, RDV1, RD, IMMEDIATE)
+
+            print()
+            print("############ NO DECODE ############")
+            print("IMMEDIATENEED ", IMMEDIATE_NEED)
+            print("VECTORSNEED ", VECTORS_NEED)
+            print("OP ", OP)
+            print("CMD ", CMD)
+            print("L ", L)
+            print("RD1 ", RD1)
+            print("RD2 ", RD2)
+            print("RDV1 ", RDV1)
+            print("RDV2 ", RDV2)
+            print("RD ", RD)
+            print("IMM ", IMMEDIATE)
+            # print(IMMEDIATE_NEED, VECTORS_NEED, OP, CMD, L, RD1, RD2, RDV1, RDV2, RD, IMMEDIATE)
             
             # print("NOT DECODE CLOCK")
 
@@ -821,9 +915,62 @@ class Execute:
         self.alu8 = ALU()
 
     def start(self):
+        global clock, IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E
+        global ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E, READE
         while(True):
             if(clock):
-                print("EXECUTE CLOCK")
+                if(CMD_E != ''):
+                    self.immediateNeedE = IMMEDIATE_NEED_E
+                    self.vectorsNeedE = VECTORS_NEED_E
+                    self.opE = OP_E
+                    self.cmdE = CMD_E
+                    self.lE = L_E
+                    self.rd1E = RD1_E
+                    self.rd2E = RD2_E
+                    self.rdv1E = RDV1_E
+                    self.rdv2E = RDV2_E
+                    self.rdE = RD_E
+                    self.immE = IMMEDIATE_E
+
+                    if(self.opE == '00'):
+                        if(self.immediateNeedE == '0'):
+                            if(self.vectorsNeedE == '0'):
+                                self.alu1.processRegisterRegister(self.rd1E, self.rd2E, self.cmdE)
+                            elif(self.vectorsNeedE == '1'):
+                                self.alu1.process8Bits(self.rdv1E[0][0], self.rdv2E[0][0], self.cmdE)
+                                self.alu2.process8Bits(self.rdv1E[1][0], self.rdv2E[1][0], self.cmdE)
+                                self.alu3.process8Bits(self.rdv1E[2][0], self.rdv2E[2][0], self.cmdE)
+                                self.alu4.process8Bits(self.rdv1E[3][0], self.rdv2E[3][0], self.cmdE)
+                                self.alu5.process8Bits(self.rdv1E[4][0], self.rdv2E[4][0], self.cmdE)
+                                self.alu6.process8Bits(self.rdv1E[5][0], self.rdv2E[5][0], self.cmdE)
+                                self.alu7.process8Bits(self.rdv1E[6][0], self.rdv2E[6][0], self.cmdE)
+                                self.alu8.process8Bits(self.rdv1E[7][0], self.rdv2E[7][0], self.cmdE)
+                        elif(self.immediateNeedE == '1'):
+                            if(self.vectorsNeedE == '0'):
+                                print("EXECUTION IMMEDIATE", self.immE)
+                                self.alu1.processRegisterImm(self.rd1E, self.immE , self.cmdE)
+                            elif(self.vectorsNeedE == '1'):
+                                print("EXECUTION IMMEDIATE", self.immE)
+                                self.alu1.process8Bits(self.rdv1E[0][0], self.immE[4:], self.cmdE)
+                                self.alu2.process8Bits(self.rdv1E[1][0], self.immE[4:], self.cmdE)
+                                self.alu3.process8Bits(self.rdv1E[2][0], self.immE[4:], self.cmdE)
+                                self.alu4.process8Bits(self.rdv1E[3][0], self.immE[4:], self.cmdE)
+                                self.alu5.process8Bits(self.rdv1E[4][0], self.immE[4:], self.cmdE)
+                                self.alu6.process8Bits(self.rdv1E[5][0], self.immE[4:], self.cmdE)
+                                self.alu7.process8Bits(self.rdv1E[6][0], self.immE[4:], self.cmdE)
+                                self.alu8.process8Bits(self.rdv1E[7][0], self.immE[4:], self.cmdE)
+                print()
+                print("############ EXECUTE ############")
+                print("IMMEDIATENEED_M ", self.immediateNeedE)
+                print("VECTORSNEED_M ", self.vectorsNeedE)
+                print("OP_M ", self.opE)
+                print("CMD_M ", self.cmdE)
+                print("RD1E ", self.rd1E)
+                print("RD2E ", self.rd2E)
+                print("RDV1E ", self.rdv1E)
+                print("RDV2E ", self.rdv2E)
+                print("RDE ", self.rdE)
+                print("IMME ", self.immE)
                 time.sleep(1)
             else:
                 print("NOT EXECUTE CLOCK")
@@ -831,7 +978,6 @@ class Execute:
 
     def noClock(self):
         global clock, IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E
-        #global IMMEDIATE_NEED_M, IMMEDIATE_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M
         global ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E, READE
         if(clock == 1):
             if(CMD_E != ''):
@@ -878,8 +1024,21 @@ class Execute:
                     
 
 
+            print()
+            print("############ EXECUTE ############")
+            print("IMMEDIATENEED_M ", self.immediateNeedE)
+            print("VECTORSNEED_M ", self.vectorsNeedE)
+            print("OP_M ", self.opE)
+            print("CMD_M ", self.cmdE)
+            print("RD1E ", self.rd1E)
+            print("RD2E ", self.rd2E)
+            print("RDV1E ", self.rdv1E)
+            print("RDV2E ", self.rdv2E)
+            print("RDE ", self.rdE)
+            print("IMME ", self.immE)
+            
 
-            print("EXECUTE ", self.immediateNeedE, self.vectorsNeedE, self.opE, self.cmdE, self.lE, self.rd1E, self.rd2E, self.rdv1E, self.rdv2E, self.rdE, self.immE )
+            # print("EXECUTE ", self.immediateNeedE, self.vectorsNeedE, self.opE, self.cmdE, self.lE, self.rd1E, self.rd2E, self.rdv1E, self.rdv2E, self.rdE, self.immE )
         else:
             if(self.opE == '00'):
                 if(self.immediateNeedE == '0'):
@@ -931,8 +1090,8 @@ class Execute:
                         IMMEDIATE_NEEDE = self.immediateNeedE
                         VECTORS_NEEDE = self.vectorsNeedE
                     elif(self.lE == '1'):# LDR
-                        ALURESULTE = ''
-                        READE = self.rd2E
+                        ALURESULTE = self.rd2E
+                        READE = ''
                         WA3E = self.rdE
                         OPE = self.opE
                         CMDE = self.cmdE
@@ -949,16 +1108,25 @@ class Execute:
                         IMMEDIATE_NEEDE = self.immediateNeedE
                         VECTORS_NEEDE = self.vectorsNeedE
                     elif(self.lE == '1'):# LDRV
-                        ALURESULTE = ''
-                        READE = self.rd2E
+                        ALURESULTE = self.rd2E
+                        READE = ''
                         WA3E = self.rdE
                         LE = self.lE
                         OPE = self.opE
                         CMDE = self.cmdE
                         IMMEDIATE_NEEDE = self.immediateNeedE
                         VECTORS_NEEDE = self.vectorsNeedE
-
-            print("NO EXECUTE ", ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, READE)
+            print()
+            print("############ NO EXECUTE ############")
+            print("ALURESULTE ", ALURESULTE)
+            print("WA3E ", WA3E)
+            print("WRITEDATAE ", WRITEDATAE)
+            print("IMMEDIATENEEDE ", IMMEDIATE_NEEDE)
+            print("VECTORSNEEDE ", VECTORS_NEEDE)
+            print("OPE ", OPE)
+            print("CMDE ", CMDE)
+            print("LE ", LE)
+            # print("NO EXECUTE ", ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, READE)
 
             # print("NOT EXECUTE CLOCK")
 
@@ -968,7 +1136,6 @@ class Execute:
 class Memory:
 
     def __init__(self):
-        self.am = ''
         self.readm = ''
         self.wa3m = ''
         self.aluresultm = ''
@@ -981,22 +1148,143 @@ class Memory:
 
 
     def start(self):
-        global clock
+        global clock, ALURESULT_M, WRITEDATA_M, WA3_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M, READ_M
+        global ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
+        global INSTRUCTION_MEMORY, MEMORY_ARRAY
         while(True):
             if(clock):
-                print("MEMORY CLOCK")
+                if(CMD_M != ''):
+                    self.aluresultm = ALURESULT_M
+                    self.readm = READ_M
+                    self.wa3m = WA3_M
+                    self.writedatam = WRITEDATA_M
+                    self.immediateNeedm = IMMEDIATE_NEED_M
+                    self.vectorsNeedm = VECTORS_NEED_M
+                    self.opm = OP_M
+                    self.cmdm = CMD_M
+                    self.lm = L_M
+
+                print()
+                print("############ MEMORY ############")
+                print("ALURESULT_M ", self.aluresultm)
+                print("WA3_M ", self.wa3m)
+                print("WRITEDATA_M ", self.writedatam)
+                print("IMMEDIATENEED_M ", self.immediateNeedm)
+                print("VECTORSNEED_M ", self.vectorsNeedm)
+                print("OP_M ", self.opm)
+                print("CMD_M ", self.cmdm)
+                print("L_M ", self.lm)
                 time.sleep(1)
             else:
-                print("NOT MEMORY CLOCK")
+                if(self.opm == '00'):
+                    if(self.immediateNeedm == '0'):
+                        if(self.vectorsNeedm == '0'):
+                            ALURESULTM = self.aluresultm
+                            WA3M = self.wa3m
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                        elif(self.vectorsNeedm == '1'):
+                            ALURESULTM = self.aluresultm
+                            WA3M = self.wa3m
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                    elif(self.immediateNeedm == '1'):
+                        if(self.vectorsNeedm == '0'):
+                            ALURESULTM = self.aluresultm
+                            WA3M = self.wa3m
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                        elif(self.vectorsNeedm == '1'):
+                            ALURESULTM = self.aluresultm
+                            WA3M = self.wa3m
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                elif(self.opm == '01'):
+                    if(self.vectorsNeedm == '0'):
+                        if(self.lm == '0'): # STR
+                            print("STR WRITEDATA", self.writedatam)
+                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            print("DATA", data)
+                            print("INSTRUCTION MEMORY ", MEMORY_ARRAY[data])
+                            print("ALURESULTM ", self.aluresultm)
+                            MEMORY_ARRAY[data] = self.aluresultm
+                            ALURESULTM = ''
+                            WA3M = ''
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                        elif(self.lm == '1'): # LDR
+                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            ALURESULTM = MEMORY_ARRAY[data]
+                            WRITEDATAM = ''
+                            WA3M = self.wa3m
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                    elif(self.vectorsNeedm == '1'):
+                        if(self.lm == '0'): # STRV
+                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            MEMORY_ARRAY[data] = [self.aluresultm[0] , self.aluresultm[1], self.aluresultm[2], self.aluresultm[3]]
+                            MEMORY_ARRAY[data + 1] = [self.aluresultm[4] , self.aluresultm[5], self.aluresultm[6], self.aluresultm[7]]
+                            ALURESULTM = ''
+                            WA3M = ''
+                            WRITEDATAM = ''
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm 
+                        elif(self.lm == '1'): # LDRV
+                            data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                            aluTemp = MEMORY_ARRAY[data] + MEMORY_ARRAY[data + 1]
+                            ALURESULTM = aluTemp
+                            WRITEDATAM = ''
+                            WA3M = self.wa3m
+                            IMMEDIATE_NEEDM = self.immediateNeedm
+                            VECTORS_NEEDM = self.vectorsNeedm
+                            LM = self.lm
+                            OPM = self.opm
+                            CMDM = self.cmdm
+                print()
+                print("############ NO MEMORY ############")
+                print("ALURESULTM ", ALURESULTM)
+                print("WA3M ", WA3M)
+                print("WRITEDATAM ", WRITEDATAM)
+                print("IMMEDIATENEEDM ", IMMEDIATE_NEEDM)
+                print("VECTORSNEEDM ", VECTORS_NEEDM)
+                print("OPM ", OPM)
+                print("CMDM ", CMDM)
+                print("LM ", LM)
                 time.sleep(1)
 
     def noClock(self):
         global clock, ALURESULT_M, WRITEDATA_M, WA3_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M, READ_M
         global ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
-        global INSTRUCTION_MEMORY
+        global INSTRUCTION_MEMORY, MEMORY_ARRAY
         if(clock == 1):
             if(CMD_M != ''):
-                self.am = ALURESULT_M
+                self.aluresultm = ALURESULT_M
                 self.readm = READ_M
                 self.wa3m = WA3_M
                 self.writedatam = WRITEDATA_M
@@ -1005,40 +1293,16 @@ class Memory:
                 self.opm = OP_M
                 self.cmdm = CMD_M
                 self.lm = L_M
-
-                # if(self.opm == '00'):
-                #     if(self.immediateNeedm == '0'):
-                #         if(self.vectorsNeedm == '0'):
-                            
-                #         elif(self.vectorsNeedm == '1'):
-
-                #     elif(self.immediateNeedm == '1'):
-                #         if(self.vectorsNeedm == '0'):
-                #         elif(self.vectorsNeedm == '1'):
-                # elif(self.opm == '01'):
-                #     if(self.vectorsNeedm == '0'):
-                #         if(self.lm == '0'):
-
-                #         elif(self.lm == '1'):
-
-                #     elif(self.vectorsNeedm == '1'):
-                #         if(self.lm == '0'):
-                #         elif(self.lm == '1'):
-
-
-
-
-
-            # print("MEMORY ", self.am, self.readm, self.wa3m, self.writedatam, self.immediateNeedm, self.vectorsNeedm, self.opm, self.cmdm, self.lm)
+            print()
             print("############ MEMORY ############")
-            print("ALURESULTM ", self.am)
-            print("WA3M ", self.wa3m)
-            print("WRITEDATAM ", self.writedatam)
-            print("IMMEDIATENEEDM ", self.immediateNeedm)
-            print("VECTORSNEEDM ", self.vectorsNeedm)
-            print("OPM ", self.opm)
-            print("CMDM ", self.cmdm)
-            print("LM ", self.lm)
+            print("ALURESULT_M ", self.aluresultm)
+            print("WA3_M ", self.wa3m)
+            print("WRITEDATA_M ", self.writedatam)
+            print("IMMEDIATENEED_M ", self.immediateNeedm)
+            print("VECTORSNEED_M ", self.vectorsNeedm)
+            print("OP_M ", self.opm)
+            print("CMD_M ", self.cmdm)
+            print("L_M ", self.lm)
 
         else:
             if(self.opm == '00'):
@@ -1048,44 +1312,125 @@ class Memory:
                         WA3M = self.wa3m
                         WRITEDATAM = ''
                         IMMEDIATE_NEEDM = self.immediateNeedm
-                        
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
                     elif(self.vectorsNeedm == '1'):
-
+                        ALURESULTM = self.aluresultm
+                        WA3M = self.wa3m
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
                 elif(self.immediateNeedm == '1'):
                     if(self.vectorsNeedm == '0'):
+                        ALURESULTM = self.aluresultm
+                        WA3M = self.wa3m
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
                     elif(self.vectorsNeedm == '1'):
+                        ALURESULTM = self.aluresultm
+                        WA3M = self.wa3m
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
             elif(self.opm == '01'):
                 if(self.vectorsNeedm == '0'):
-                    if(self.lm == '0'):
-
-                    elif(self.lm == '1'):
-
+                    if(self.lm == '0'): # STR
+                        print("STR WRITEDATA", self.writedatam)
+                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        print("DATA", data)
+                        print("INSTRUCTION MEMORY ", MEMORY_ARRAY[data])
+                        print("ALURESULTM ", self.aluresultm)
+                        MEMORY_ARRAY[data] = self.aluresultm
+                        ALURESULTM = ''
+                        WA3M = ''
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
+                    elif(self.lm == '1'): # LDR
+                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        ALURESULTM = MEMORY_ARRAY[data]
+                        WRITEDATAM = ''
+                        WA3M = self.wa3m
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
                 elif(self.vectorsNeedm == '1'):
-                    if(self.lm == '0'):
-                    elif(self.lm == '1'):
-            print("NOT MEMORY CLOCK")
+                    if(self.lm == '0'): # STRV
+                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        MEMORY_ARRAY[data] = [self.aluresultm[0] , self.aluresultm[1], self.aluresultm[2], self.aluresultm[3]]
+                        MEMORY_ARRAY[data + 1] = [self.aluresultm[4] , self.aluresultm[5], self.aluresultm[6], self.aluresultm[7]]
+                        ALURESULTM = ''
+                        WA3M = ''
+                        WRITEDATAM = ''
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm 
+                    elif(self.lm == '1'): # LDRV
+                        data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
+                        aluTemp = MEMORY_ARRAY[data] + MEMORY_ARRAY[data + 1]
+                        ALURESULTM = aluTemp
+                        WRITEDATAM = ''
+                        WA3M = self.wa3m
+                        IMMEDIATE_NEEDM = self.immediateNeedm
+                        VECTORS_NEEDM = self.vectorsNeedm
+                        LM = self.lm
+                        OPM = self.opm
+                        CMDM = self.cmdm
+            print()
+            print("############ NO MEMORY ############")
+            print("ALURESULTM ", ALURESULTM)
+            print("WA3M ", WA3M)
+            print("WRITEDATAM ", WRITEDATAM)
+            print("IMMEDIATENEEDM ", IMMEDIATE_NEEDM)
+            print("VECTORSNEEDM ", VECTORS_NEEDM)
+            print("OPM ", OPM)
+            print("CMDM ", CMDM)
+            print("LM ", LM)
+            # print("NOT MEMORY CLOCK")
 
     def loadImage(self):
         # Can be many different formats.
-        im = Image.open('../images/lenna_saturacion.png', 'r')
+        im = Image.open('../images/lenna_grises128.jpg', 'r')
         pix_val = list(im.getdata())
         # print(pix_val[16383])
-        size = im.size[0]
-        size_2 = size * size
-        print(size)
+        size = im.size
+        size_2 = len(pix_val)
+        print(size_2)
+        print("SIZE IMAGE ", size)
         cont = 0
-
-        while(cont < size_2 * 3):
+        
+        # for x in pix_val:
+        #     print(x)
+        while(cont < size_2 * 10):
             mem_l = []
             if(cont < size_2):
                 if(cont == size_2 - 4):
-                    print(pix_val[cont])
-                    print(pix_val[cont+1])
-                    print(pix_val[cont+2])
+                    # print("PIXEL 1 ", pix_val[cont])
+                    # print("PIXEL 2 ", pix_val[cont+1])
+                    # print("PIXEL 3 ", pix_val[cont+2])
 
-                    l1 = pix_val[cont][0]
-                    l2 = pix_val[cont+1][0]
-                    l3 = pix_val[cont+2][0]
+                    l1 = pix_val[cont]
+                    l2 = pix_val[cont+1]
+                    l3 = pix_val[cont+2]
 
                     mem_l.append([toBinary(l1, 8)])
                     mem_l.append([toBinary(l2, 8)])
@@ -1095,15 +1440,15 @@ class Memory:
                     MEMORY_ARRAY.append(mem_l)
                 else:
 
-                    print(pix_val[cont])
-                    print(pix_val[cont+1])
-                    print(pix_val[cont+2])
-                    print(pix_val[cont+3])
+                    # print("PIXEL 1 ", pix_val[cont])
+                    # print("PIXEL 2 ", pix_val[cont+1])
+                    # print("PIXEL 3 ", pix_val[cont+2])
+                    # print("PIXEL 4 ", pix_val[cont+3])
 
-                    l1 = pix_val[cont][0]
-                    l2 = pix_val[cont+1][0]
-                    l3 = pix_val[cont+2][0]
-                    l4 = pix_val[cont+3][0]
+                    l1 = pix_val[cont]
+                    l2 = pix_val[cont+1]
+                    l3 = pix_val[cont+2]
+                    l4 = pix_val[cont+3]
 
                     mem_l.append([toBinary(l1, 8)])
                     mem_l.append([toBinary(l2, 8)])
@@ -1131,6 +1476,14 @@ class Memory:
 
 
 class WriteBack:
+    def __init__(self):
+        self.aluresult_w = ''
+        self.wa3_w = ''
+        self.immediateNeed_w = ''
+        self.vectorsNeedw_w = ''
+        self.op_w = ''
+        self.cmd_w = ''
+        self.l_w = ''
 
     def start(self):
         global clock
@@ -1143,12 +1496,50 @@ class WriteBack:
                 time.sleep(1)
 
     def noClock(self):
-        global clock
+        global clock, ALURESULT_W, WA3_W, IMMEDIATE_NEED_W, VECTORS_NEED_W, OP_W, CMD_W, L_W
+        global vectorsFile, registerFile
 
         if(clock == 1):
-            print("WRITEBACK CLOCK")
+
+            if(CMD_W != ''):
+                self.aluresult_w = ALURESULT_W
+                self.wa3_w = WA3_W
+                self.immediateNeed_w = IMMEDIATE_NEED_W
+                self.vectorsNeedw_w = VECTORS_NEED_W
+                self.op_w = OP_W
+                self.cmd_w = CMD_W
+                self.l_w = L_W
+
+            print()
+            print("############ WRITEBACK ############")
+            print("ALURESULT_W", self.aluresult_w)
+            print("WA3_W", self.wa3_w)
+            print("IMMEDIATE_NEED_W", self.immediateNeed_w)
+            print("VECTORS_NEED_W", self.vectorsNeedw_w)
+            print("OP_W", self.op_w)
+            print("CMD_W", self.cmd_w)
+            print("L_W", self.l_w)
+
+            # print("WRITEBACK CLOCK")
         else:
-            print("NOT WRITEBACK CLOCK")
+            if(CMD_W != ''):
+                if(self.op_w == '00'):
+                    if(self.vectorsNeedw_w == '0'):
+                        registerFile.noClock('','',self.wa3_w, 1, self.aluresult_w)
+                    elif(self.vectorsNeedw_w == '1'):
+                        vectorsFile.noClock('', '', self.wa3_w, 1, self.aluresult_w)
+                elif(self.op_w == '01'):
+                    if(self.l_w == '1'):
+                        if(self.vectorsNeedw_w == '0'):
+                            registerFile.noClock('', '', self.wa3_w, 1, self.aluresult_w)
+                            print("LDR")
+                        elif(self.vectorsNeedw_w == '1'):
+                            print("LDRV")
+                            vectorsFile.noClock('', '', self.wa3_w, 1, self.aluresult_w)
+            print()
+            print("############ NO WRITEBACK ############")
+            
+            # print("NOT WRITEBACK CLOCK")
 
 
 ################################## MAIN ##################################
@@ -1156,6 +1547,7 @@ class WriteBack:
 def main():
     global FLAG_PROCESSOR
     global clock
+    global REGISTERS, VECTORS, MEMORY_ARRAY
     print("Do you want to run it you or all???\n")
     x = input("1. All or 2. You: ")
 
@@ -1163,12 +1555,16 @@ def main():
     decode = Decode('','','','','','','','')
     execute = Execute()
     memory = Memory()
+    wb = WriteBack()
     pDE = pipeDE('', '', '', '', '', '', '', '', '', '', '')
     pFD = pipeFD(-1)
     pEM = pipeEM()
+    pMW = pipeMW()
     fetch.startInstructionMemory()
+    memory.loadImage()
     print()
-
+    print(len(MEMORY_ARRAY))
+    print(MEMORY_ARRAY[255])
     while(FLAG_PROCESSOR):
         x = input("")
         print("clock: " + str(clock))
@@ -1182,6 +1578,8 @@ def main():
                 execute.noClock()
                 pEM.noClock()
                 memory.noClock()
+                pMW.noClock()
+                wb.noClock()
                 clock = 1
             elif(clock == 1):
                 fetch.noClock()
@@ -1191,6 +1589,13 @@ def main():
                 execute.noClock()
                 pEM.noClock()
                 memory.noClock()
+                pMW.noClock()
+                wb.noClock()
+                print("REGISTERS ", REGISTERS)
+                print()
+                print("VECTORS ", VECTORS)
+                print()
+                print("MEMORY POSITION 0 ", MEMORY_ARRAY[0])
                 clock = 0
         else:
             FLAG_PROCESSOR = False
