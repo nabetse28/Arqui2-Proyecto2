@@ -4,6 +4,9 @@ import time
 
 clock = 1
 
+f = open("image.txt", "w")
+
+
 FLAG_PROCESSOR = True
 A = 0
 RD = 0
@@ -107,11 +110,11 @@ REGISTERS = {"0000": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "0111": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "1000": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
              "1001": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
-             "1010": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
+             "1010": [['00000000'], ['00000000'], ['00010000'], ['00000000']], 
              "1011": [['00000000'], ['00000000'], ['00000000'], ['00000000']],
              "1100": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
              "1101": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
-             "1110": [['00000000'], ['00000000'], ['00000000'], ['00000000']], 
+             "1110": [['00000000'], ['00000000'], ['00010000'], ['00000000']], 
              "1111": [['00000000'], ['00000000'], ['00000000'], ['00000000']]}
 
 VECTORS = {"0000": [['00000000'], ['00000000'], ['00000000'], ['00000000'], ['00000000'], ['00000000'], ['00000000'], ['00000000']], 
@@ -176,19 +179,19 @@ def toDecimal(number):
 
 def circularMoveRight(srcA, srcB):
     cont = 0
-    res = ''
+    res = srcA
     while(cont < srcB):
-        res = srcA[-1] + srcA[:-1]
+        res = res[-1] + res[:-1]
         cont += 1
-
+        # print(res)
     return res
 
 
 def circularMoveLeft(srcA, srcB):
     cont = 0
-    res = ''
+    res = srcA
     while(cont < srcB):
-        res = srcA[1:] + srcA[0]
+        res = res[1:] + res[0]
         cont += 1
 
     return res
@@ -206,7 +209,7 @@ class Clock:
                 clock = 1
             elif(clock == 1):
                 clock = 0
-            time.sleep(1)
+            time.sleep(0.5)
             print("clock: " + str(clock))
 
 ################################## OTHER MODULES ##################################
@@ -240,9 +243,11 @@ class ALU:
             self.res = bi[24:]
             # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '1000'):
+            print("CIRCULAR R ", srcBE)
             self.res = circularMoveRight(srcAE, toDecimal(srcBE))
             # print("PROCESS 8 BITS ", self.res)
         elif(ALUControlE == '1001'):
+            print("CIRCULAR R ", srcBE)
             self.res = circularMoveLeft(srcAE, toDecimal(srcBE))
             # print("PROCESS 8 BITS ", self.res)
 
@@ -299,11 +304,11 @@ class pipeFD:
                 if(self.inst != -1):
                     INSTD = self.inst
                 print("INSTD IS " + str(INSTD))
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 print("INSTF IS " + str(INSTF))
                 self.inst = INSTF
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, INSTD, INSTF
@@ -352,7 +357,7 @@ class pipeDE:
                     RD_E=  self.rd
                     IMMEDIATE_E = self.imm
                 print("PIPE DE ", IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(CMD != ''):
                     self.immediateNeed = IMMEDIATE_NEED
@@ -368,7 +373,7 @@ class pipeDE:
                     self.imm = IMMEDIATE
                 # print("LOAD DECODE", self.l)
                 print("NOT PIPE DE ", self.immediateNeed, self.vectorsNeed, self.op, self.cmd, self.l, self.rd1, self.rd2, self.rdv1, self.rdv2, self.rd, self.imm)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, IMMEDIATE_NEED, VECTORS_NEED, OP, CMD, L, RD1, RD2, RDV1, RDV2, RD, IMMEDIATE
@@ -454,7 +459,7 @@ class pipeEM:
                 print("OP_M ", OP_M)
                 print("CMD_M ", CMD_M)
                 print("L_M ", self.lm)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(CMDE != ''):
                     self.aluresultm = ALURESULTE
@@ -478,7 +483,7 @@ class pipeEM:
                 print("OPM ", self.opm)
                 print("CMDM ", self.cmdm)
                 print("LM ", self.lm)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, ALURESULTE, WRITEDATAE, WA3E, OPE, CMDE, LE, IMMEDIATE_NEEDE, VECTORS_NEEDE, RD1E, RD2E, RDV1E, RDV2E, READE
@@ -567,7 +572,7 @@ class pipeMW:
                 print("OP_W ", OP_W)
                 print("CMD_W ", CMD_W)
                 print("L_W ", L_W)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(CMDM != ''):
                     self.aluresultw = ALURESULTM
@@ -587,7 +592,7 @@ class pipeMW:
                 print("OPW ", self.opw)
                 print("CMDW ", self.cmdw)
                 print("LW ", self.lw)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
@@ -673,12 +678,12 @@ class Fetch:
                 self.RD = INSTRUCTION_MEMORY[toDecimal(self.A)]
                 print("INSTRUCTION " + str(self.RD))
                 # print("FETCH CLOCK")
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 self.registerPC.noClock()
                 INSTF = self.RD
                 print("WRITE INSTF " + str(INSTF))
-                time.sleep(1)
+                time.sleep(0.5)
 
     def startInstructionMemory(self):
         global INSTRUCTION_MEMORY, INSTRUCTION_MEMORY_SIZE
@@ -883,7 +888,7 @@ class Decode:
                 print("Rd ", self.rd)
                 print("Src ", self.src)
                 print("DECODE CLOCK")
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(self.op == '00'):
                     if(self.v == '0'):
@@ -968,7 +973,7 @@ class Decode:
                 print("RDV2 ", RDV2)
                 print("RD ", RD)
                 print("IMM ", IMMEDIATE)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, INSTD, RD1, RD2, RDV1, RDV2, RD, registerFile, vectorsFile, OP, L, IMMEDIATE_NEED, VECTORS_NEED, IMMEDIATE, CMD
@@ -1210,7 +1215,7 @@ class Execute:
                 print("RDV2E ", self.rdv2E)
                 print("RDE ", self.rdE)
                 print("IMME ", self.immE)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(self.opE == '00'):
                     if(self.immediateNeedE == '0'):
@@ -1298,7 +1303,7 @@ class Execute:
                 print("OPE ", OPE)
                 print("CMDE ", CMDE)
                 print("LE ", LE)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, IMMEDIATE_NEED_E, VECTORS_NEED_E, OP_E, CMD_E, L_E, RD1_E, RD2_E, RDV1_E, RDV2_E, RD_E, IMMEDIATE_E
@@ -1499,7 +1504,7 @@ class Memory:
                 print("OP_M ", self.opm)
                 print("CMD_M ", self.cmdm)
                 print("L_M ", self.lm)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(self.opm == '00'):
                     if(self.immediateNeedm == '0'):
@@ -1601,12 +1606,12 @@ class Memory:
                 print("OPM ", OPM)
                 print("CMDM ", CMDM)
                 print("LM ", LM)
-                time.sleep(1)
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, ALURESULT_M, WRITEDATA_M, WA3_M, IMMEDIATE_NEED_M, VECTORS_NEED_M, OP_M, CMD_M, L_M, RD1_M, RD2_M, RDV1_M, RDV2_M, RD_M, IMMEDIATE_M, READ_M
         global ALURESULTM, WRITEDATAM, WA3M, IMMEDIATE_NEEDM, VECTORS_NEEDM, OPM, CMDM, LM, RD1M, RD2M, RDV1M, RDV2M, RDM, IMMEDIATEM, READM
-        global INSTRUCTION_MEMORY, MEMORY_ARRAY
+        global INSTRUCTION_MEMORY, MEMORY_ARRAY, f
         if(clock == 1):
             if(CMD_M != ''):
                 self.aluresultm = ALURESULT_M
@@ -1703,6 +1708,22 @@ class Memory:
                         data = toDecimal(self.writedatam[0][0] + self.writedatam[1][0] + self.writedatam[2][0] + self.writedatam[3][0])
                         MEMORY_ARRAY[data] = [self.aluresultm[0] , self.aluresultm[1], self.aluresultm[2], self.aluresultm[3]]
                         MEMORY_ARRAY[data + 1] = [self.aluresultm[4] , self.aluresultm[5], self.aluresultm[6], self.aluresultm[7]]
+                        f.write(str(toDecimal(self.aluresultm[0][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[1][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[2][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[3][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[4][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[5][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[6][0])))
+                        f.write('\n')
+                        f.write(str(toDecimal(self.aluresultm[7][0])))
+                        f.write('\n')
                         ALURESULTM = ''
                         WA3M = ''
                         WRITEDATAM = ''
@@ -1745,6 +1766,7 @@ class Memory:
         # Can be many different formats.
         im = Image.open('../images/lenna_grises128.jpg', 'r')
         pix_val = list(im.getdata())
+        print(pix_val)
         # print(pix_val[16383])
         size = im.size
         size_2 = len(pix_val)
@@ -1842,7 +1864,7 @@ class WriteBack:
                 print("OP_W", self.op_w)
                 print("CMD_W", self.cmd_w)
                 print("L_W", self.l_w)
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 if(CMD_W != ''):
                     if(self.op_w == '00'):
@@ -1860,9 +1882,13 @@ class WriteBack:
                                 vectorsFile.noClock('', '', self.wa3_w, 1, self.aluresult_w)
                 print()
                 print("############ NO WRITEBACK ############")
-                print(MEMORY_ARRAY[4094])
+                print(MEMORY_ARRAY[4095])
                 print(MEMORY_ARRAY[4096])
-                time.sleep(1)
+                print(MEMORY_ARRAY[4097])
+                print(MEMORY_ARRAY[4098])
+                print(MEMORY_ARRAY[4099])
+                print(MEMORY_ARRAY[4100])
+                time.sleep(0.5)
 
     def noClock(self):
         global clock, ALURESULT_W, WA3_W, IMMEDIATE_NEED_W, VECTORS_NEED_W, OP_W, CMD_W, L_W
@@ -1908,12 +1934,15 @@ class WriteBack:
             print()
             
             print("############ NO WRITEBACK ############")
-            print(MEMORY_ARRAY[0])
-            print(MEMORY_ARRAY[1])
-            print(MEMORY_ARRAY[2])
-            print(MEMORY_ARRAY[3])
-            print(MEMORY_ARRAY[4])
-            print(MEMORY_ARRAY[5])
+            print(MEMORY_ARRAY[4095])
+            print(MEMORY_ARRAY[4096])
+            print(MEMORY_ARRAY[4097])
+            print(MEMORY_ARRAY[4098])
+            print(MEMORY_ARRAY[4099])
+            print(MEMORY_ARRAY[4100])
+            print(MEMORY_ARRAY[4101])
+            print(MEMORY_ARRAY[4102])
+            print(MEMORY_ARRAY[4103])
             # print(MEMORY_ARRAY[4094])
             # print(MEMORY_ARRAY[4098])
             # print("NOT WRITEBACK CLOCK")
@@ -1924,7 +1953,7 @@ class WriteBack:
 def main():
     global FLAG_PROCESSOR
     global clock
-    global REGISTERS, VECTORS, MEMORY_ARRAY
+    global REGISTERS, VECTORS, MEMORY_ARRAY, f
     print("Do you want to run it you or all???\n")
     x = input("1. All or 2. You: ")
 
@@ -1969,121 +1998,253 @@ def main():
 
     mem = Memory()
     mem.loadImage()
+    try:
 
-    if(str(x) == "1"):
+        if(str(x) == "1"):
 
-        clk = Clock()
-        fetch = Fetch()
-        decode = Decode()
-        execute = Execute()
-        memory = Memory()
-        wb = WriteBack()
-        pDE = pipeDE()
-        pFD = pipeFD()
-        pEM = pipeEM()
-        pMW = pipeMW()
-        fetch.startInstructionMemory()
-        memory.loadImage()
-        print()
-        print(len(MEMORY_ARRAY))
-        print(MEMORY_ARRAY[0])
-        print("One by one")
+            # clk = Clock()
+            # fetch = Fetch()
+            # decode = Decode()
+            # execute = Execute()
+            # memory = Memory()
+            # wb = WriteBack()
+            # pDE = pipeDE()
+            # pFD = pipeFD()
+            # pEM = pipeEM()
+            # pMW = pipeMW()
+            # fetch.startInstructionMemory()
+            # memory.loadImage()
+            # print()
+            # print(len(MEMORY_ARRAY))
+            # print(MEMORY_ARRAY[0])
+            # print("One by one")
 
-        t_clock = threading.Thread(target=clk.start)
-        t_fetch = threading.Thread(target=fetch.start)
-        t_pDE = threading.Thread(target=pDE.start)
-        t_decode = threading.Thread(target=decode.start)
-        t_pFD = threading.Thread(target=pFD.start)
-        t_execute = threading.Thread(target=execute.start)
-        t_pEM = threading.Thread(target=pEM.start)
-        t_mem = threading.Thread(target=memory.start)
-        t_pMW = threading.Thread(target=pMW.start)
-        t_wb = threading.Thread(target=wb.start)
+            # t_clock = threading.Thread(target=clk.start)
+            # t_fetch = threading.Thread(target=fetch.start)
+            # t_pDE = threading.Thread(target=pDE.start)
+            # t_decode = threading.Thread(target=decode.start)
+            # t_pFD = threading.Thread(target=pFD.start)
+            # t_execute = threading.Thread(target=execute.start)
+            # t_pEM = threading.Thread(target=pEM.start)
+            # t_mem = threading.Thread(target=memory.start)
+            # t_pMW = threading.Thread(target=pMW.start)
+            # t_wb = threading.Thread(target=wb.start)
 
-        t_clock.start()
-        time.sleep(0.1)
+            # t_clock.start()
+            # time.sleep(0.1)
 
-        t_fetch.start()
-        time.sleep(0.1)
+            # t_fetch.start()
+            # time.sleep(0.1)
 
-        t_pFD.start()
-        time.sleep(0.1)
+            # t_pFD.start()
+            # time.sleep(0.1)
 
-        t_decode.start()
-        time.sleep(0.1)
+            # t_decode.start()
+            # time.sleep(0.1)
 
-        t_pDE.start()
-        time.sleep(0.1)
+            # t_pDE.start()
+            # time.sleep(0.1)
 
-        t_execute.start()
-        time.sleep(0.1)
+            # t_execute.start()
+            # time.sleep(0.1)
 
-        t_pEM.start()
-        time.sleep(0.1)
+            # t_pEM.start()
+            # time.sleep(0.1)
 
-        t_mem.start()
-        time.sleep(0.1)
+            # t_mem.start()
+            # time.sleep(0.1)
 
-        t_pMW.start()
-        time.sleep(0.1)
+            # t_pMW.start()
+            # time.sleep(0.5)
 
-        t_wb.start()
+            # t_wb.start()
 
-    elif(str(x) == "2"):
+            fetch = Fetch()
+            decode = Decode()
+            execute = Execute()
+            memory = Memory()
+            wb = WriteBack()
+            pDE = pipeDE()
+            pFD = pipeFD()
+            pEM = pipeEM()
+            pMW = pipeMW()
+            fetch.startInstructionMemory()
+            memory.loadImage()
+            print()
+            print(len(MEMORY_ARRAY))
+            print(MEMORY_ARRAY[0])
+            print("One by one")
 
-        fetch = Fetch()
-        decode = Decode()
-        execute = Execute()
-        memory = Memory()
-        wb = WriteBack()
-        pDE = pipeDE()
-        pFD = pipeFD()
-        pEM = pipeEM()
-        pMW = pipeMW()
-        fetch.startInstructionMemory()
-        memory.loadImage()
-        print()
-        print(len(MEMORY_ARRAY))
-        print(MEMORY_ARRAY[0])
-        print("One by one")
+            while(FLAG_PROCESSOR):
+                x = "0"
+                if(str(x) == "0"):
 
-        while(FLAG_PROCESSOR):
-            x = input("")
-            if(str(x) == "0"):
+                    if(clock == 0):
+                        fetch.noClock()
+                        pFD.noClock()
+                        decode.noClock()
+                        pDE.noClock()
+                        execute.noClock()
+                        pEM.noClock()
+                        memory.noClock()
+                        pMW.noClock()
+                        wb.noClock()
+                        clock = 1
+                    elif(clock == 1):
+                        fetch.noClock()
+                        pFD.noClock()
+                        decode.noClock()
+                        pDE.noClock()
+                        execute.noClock()
+                        pEM.noClock()
+                        memory.noClock()
+                        pMW.noClock()
+                        wb.noClock()
+                        print(REGISTERS)
+                        print()
+                        print(VECTORS)
+                        print()
+                        clock = 0
+                else:
+                    FLAG_PROCESSOR = False
+                print("clock: " + str(clock))
 
-                if(clock == 0):
-                    fetch.noClock()
-                    pFD.noClock()
-                    decode.noClock()
-                    pDE.noClock()
-                    execute.noClock()
-                    pEM.noClock()
-                    memory.noClock()
-                    pMW.noClock()
-                    wb.noClock()
-                    clock = 1
-                elif(clock == 1):
-                    fetch.noClock()
-                    pFD.noClock()
-                    decode.noClock()
-                    pDE.noClock()
-                    execute.noClock()
-                    pEM.noClock()
-                    memory.noClock()
-                    pMW.noClock()
-                    wb.noClock()
-                    print(REGISTERS)
-                    print()
-                    print(VECTORS)
-                    print()
-                    clock = 0
-            else:
-                FLAG_PROCESSOR = False
-            print("clock: " + str(clock))
+        elif(str(x) == "2"):
 
-    else:
-        print("Error")
+            fetch = Fetch()
+            decode = Decode()
+            execute = Execute()
+            memory = Memory()
+            wb = WriteBack()
+            pDE = pipeDE()
+            pFD = pipeFD()
+            pEM = pipeEM()
+            pMW = pipeMW()
+            fetch.startInstructionMemory()
+            memory.loadImage()
+            print()
+            print(len(MEMORY_ARRAY))
+            print(MEMORY_ARRAY[0])
+            print("One by one")
+
+            while(FLAG_PROCESSOR):
+                x = input("")
+                if(str(x) == "0"):
+
+                    if(clock == 0):
+                        fetch.noClock()
+                        pFD.noClock()
+                        decode.noClock()
+                        pDE.noClock()
+                        execute.noClock()
+                        pEM.noClock()
+                        memory.noClock()
+                        pMW.noClock()
+                        wb.noClock()
+                        clock = 1
+                    elif(clock == 1):
+                        fetch.noClock()
+                        pFD.noClock()
+                        decode.noClock()
+                        pDE.noClock()
+                        execute.noClock()
+                        pEM.noClock()
+                        memory.noClock()
+                        pMW.noClock()
+                        wb.noClock()
+                        print(REGISTERS)
+                        print()
+                        print(VECTORS)
+                        print()
+                        clock = 0
+                else:
+                    FLAG_PROCESSOR = False
+                print("clock: " + str(clock))
+
+        elif(str(x) == "3"):
+
+            clk = Clock()
+            fetch = Fetch()
+            decode = Decode()
+            execute = Execute()
+            memory = Memory()
+            wb = WriteBack()
+            pDE = pipeDE()
+            pFD = pipeFD()
+            pEM = pipeEM()
+            pMW = pipeMW()
+            fetch.startInstructionMemory()
+            memory.loadImage()
+            print()
+            print(len(MEMORY_ARRAY))
+            print(MEMORY_ARRAY[0])
+            print("One by one")
+
+            t_clock = threading.Thread(target=clk.start)
+            t_fetch = threading.Thread(target=fetch.start)
+            t_pDE = threading.Thread(target=pDE.start)
+            t_decode = threading.Thread(target=decode.start)
+            t_pFD = threading.Thread(target=pFD.start)
+            t_execute = threading.Thread(target=execute.start)
+            t_pEM = threading.Thread(target=pEM.start)
+            t_mem = threading.Thread(target=memory.start)
+            t_pMW = threading.Thread(target=pMW.start)
+            t_wb = threading.Thread(target=wb.start)
+
+            t_clock.start()
+            time.sleep(0.1)
+
+            t_fetch.start()
+            time.sleep(0.1)
+
+            t_pFD.start()
+            time.sleep(0.1)
+
+            t_decode.start()
+            time.sleep(0.1)
+
+            t_pDE.start()
+            time.sleep(0.1)
+
+            t_execute.start()
+            time.sleep(0.1)
+
+            t_pEM.start()
+            time.sleep(0.1)
+
+            t_mem.start()
+            time.sleep(0.1)
+
+            t_pMW.start()
+            time.sleep(0.5)
+
+            t_wb.start()
+        else:
+            print("Error")
+    except:
+        f.close()
+        print("IMAGE PROCESSINGs")
+        print("FINAL ", toDecimal(MEMORY_ARRAY[0][0]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[0][1]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[0][2]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[0][3]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[1][0]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[1][1]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[1][2]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[1][3]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[2][0]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[2][1]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[2][2]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[2][3]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[3][0]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[3][1]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[3][2]))
+        print("FINAL ", toDecimal(MEMORY_ARRAY[3][3]))
+
+        
 
 
 main()
 # toBinary(1, 4)
+# a = circularMoveRight('11111010', 4)
+# print(a)
