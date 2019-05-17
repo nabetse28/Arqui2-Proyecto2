@@ -23,8 +23,8 @@ for y in range(size_2, size - 1):
 # print(image_list1)
 im1 = Image.new('L', (128, 128))
 im1.putdata(image_list1)
-im1.save("encriptado2.jpg")
+im1.save("pruebaencriptado.jpg")
 
 im2 = Image.new('L', (128, 128))
 im2.putdata(image_list2)
-im2.save("desencriptado2.jpg")
+im2.save("pruebadesencriptado.jpg")
